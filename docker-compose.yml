@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+ demoappdb:
+  container_name: app_db
+  image: mcr.microsoft.com/mssql/server:2022-latest
+  ports:
+   - 8002:1433
+  environment:
+   - Accept_eula=y
+   - SA_PASSWORD=ElifCanci12345
+ finderwebapp:
+    container_name: demo-finder-app
+    image: ${DOCKER_REGISTRY-}finderwebapp
+    build:
+      context: .
+      dockerfile: FinderWebApp/Dockerfile
+    ports:
+     - 8001:80
+    depends_on:
+     - demoappdb
+    environment:
+     - DB_Host=demoappdb
+     - DB_NAME=FinderDB
+     - DB_SA_PASSWORD=ElifCanci12345

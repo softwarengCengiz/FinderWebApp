@@ -3,25 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinderWebApp", "FinderWebApp\FinderWebApp.csproj", "{2A923801-440D-45F2-9ADB-B4FA6C14280B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinderWebApp", "FinderWebApp\FinderWebApp.csproj", "{2A923801-440D-45F2-9ADB-B4FA6C14280B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{844758E1-B8D8-437F-9BF4-07F8DBDEFF8C} = {844758E1-B8D8-437F-9BF4-07F8DBDEFF8C}
 		{B32E7F20-277E-4925-887E-FA1DA6D0009F} = {B32E7F20-277E-4925-887E-FA1DA6D0009F}
 		{F9B7E47F-FABC-4415-A412-94CB373E3F4B} = {F9B7E47F-FABC-4415-A412-94CB373E3F4B}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{B32E7F20-277E-4925-887E-FA1DA6D0009F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B32E7F20-277E-4925-887E-FA1DA6D0009F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{844758E1-B8D8-437F-9BF4-07F8DBDEFF8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{844758E1-B8D8-437F-9BF4-07F8DBDEFF8C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B32E7F20-277E-4925-887E-FA1DA6D0009F} = {B32E7F20-277E-4925-887E-FA1DA6D0009F}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F9B7E47F-FABC-4415-A412-94CB373E3F4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F9B7E47F-FABC-4415-A412-94CB373E3F4B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{844758E1-B8D8-437F-9BF4-07F8DBDEFF8C} = {844758E1-B8D8-437F-9BF4-07F8DBDEFF8C}
 		{B32E7F20-277E-4925-887E-FA1DA6D0009F} = {B32E7F20-277E-4925-887E-FA1DA6D0009F}
 	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7C15FD40-E799-4B39-A85B-82F9214C177A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{F9B7E47F-FABC-4415-A412-94CB373E3F4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9B7E47F-FABC-4415-A412-94CB373E3F4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9B7E47F-FABC-4415-A412-94CB373E3F4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C15FD40-E799-4B39-A85B-82F9214C177A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C15FD40-E799-4B39-A85B-82F9214C177A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C15FD40-E799-4B39-A85B-82F9214C177A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C15FD40-E799-4B39-A85B-82F9214C177A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
