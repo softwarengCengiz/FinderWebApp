@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+var services = builder.Services;
+services.AddSingleton<IConfiguration>(provider => provider.GetRequiredService<IConfiguration>());
 
-var dbHost = "localHost";
-var dbName = "FinderDB";
-var dbPassword = "ElifCanci12345";
-var connectionString = $"Data Source={dbHost};Initial Catalog={dbName}; User ID=sa;Password={dbPassword}";
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(connectionString));
+services.AddDbContext<AppDbContext>();
+
+//services.AddScoped<MyService>();
+
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 

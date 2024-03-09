@@ -1,13 +1,14 @@
 ﻿using Application.Student.Contract;
 using AutoMapper;
+using FinderWebApi.Models;
 
-namespace Application.Student.Mappings
+namespace FinderWebApi.Mappings
 {
     public class StudentProfile : Profile
     {
         public StudentProfile()
         {
-            CreateMap<Domain.Student.Student, StudentDto>().ReverseMap();
+            CreateMap<StudentDto, Student>().ReverseMap();
         }
     }
 }

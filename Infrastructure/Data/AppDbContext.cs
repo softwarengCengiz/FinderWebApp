@@ -1,29 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
+﻿using Domain.Participant;
+using Domain.Student;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        {
-			try
-			{
-				var databaseCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
-				if (databaseCreator != null)
-				{
-					if (!databaseCreator.CanConnect()) databaseCreator.Create();
-					if (!databaseCreator.HasTables()) databaseCreator.CreateTables();
-				}
-			}
-			catch (Exception ex)
-			{
+        private readonly IConfiguration _configuration;
 
-				Console.WriteLine(ex.Message);
-			}
+        public AppDbContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
         }
 
-		//public DbSet<Student> Students { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            var connectionString = _configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+
+        public DbSet<Student> Students { get; set; }
+		public DbSet<Participant> Participants { get; set; }
     }
 }
