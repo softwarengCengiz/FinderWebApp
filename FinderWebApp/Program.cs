@@ -3,14 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var services = builder.Services;
-services.AddSingleton<IConfiguration>(provider => provider.GetRequiredService<IConfiguration>());
-
-services.AddDbContext<AppDbContext>();
-
-//services.AddScoped<MyService>();
-
 builder.Services.AddControllersWithViews();
+
+var services = builder.Services;
+
+services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
