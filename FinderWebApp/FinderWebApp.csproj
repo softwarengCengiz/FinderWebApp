@@ -9,12 +9,16 @@
   <ItemGroup>
     <Compile Remove="MVC\**" />
     <Compile Remove="wwwroot\lib\**" />
+    <Compile Remove="wwwroot\vendor\**" />
     <Content Remove="MVC\**" />
     <Content Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\vendor\**" />
     <EmbeddedResource Remove="MVC\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\**" />
     <None Remove="MVC\**" />
     <None Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\vendor\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,25 +26,88 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\assets\fonts\flexslider-icon.svg" />
-    <None Include="wwwroot\assets\fonts\fontawesome-webfont.svg" />
-    <None Include="wwwroot\assets\fonts\fontawesome-webfont.woff2" />
-    <None Include="wwwroot\assets\fonts\slick.svg" />
-    <None Include="wwwroot\assets\js\custom.js" />
-    <None Include="wwwroot\assets\js\isotope.js" />
-    <None Include="wwwroot\assets\js\isotope.min.js" />
-    <None Include="wwwroot\assets\js\lightbox.js" />
-    <None Include="wwwroot\assets\js\owl-carousel.js" />
-    <None Include="wwwroot\assets\js\slick-slider.js" />
-    <None Include="wwwroot\assets\js\tabs.js" />
-    <None Include="wwwroot\assets\js\video.js" />
-    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.min.js" />
-    <None Include="wwwroot\vendor\jquery\jquery.js" />
-    <None Include="wwwroot\vendor\jquery\jquery.min.js" />
-    <None Include="wwwroot\vendor\jquery\jquery.min.map" />
-    <None Include="wwwroot\vendor\jquery\jquery.slim.js" />
-    <None Include="wwwroot\vendor\jquery\jquery.slim.min.js" />
-    <None Include="wwwroot\vendor\jquery\jquery.slim.min.map" />
+    <None Include="wwwroot\assets\fonts\material-icon\fonts\Material-Design-Iconic-Font.svg" />
+    <None Include="wwwroot\assets\fonts\material-icon\fonts\Material-Design-Iconic-Font.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-300.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-300.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-300italic.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-300italic.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-500.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-500.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-500italic.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-500italic.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-600.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-600.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-700.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-700.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-700italic.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-700italic.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-800.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-800.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-800italic.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-800italic.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-900.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-900.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-italic.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-italic.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-regular.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\poppins-v5-latin-regular.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-700.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-700.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-700italic.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-700italic.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-italic.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-italic.woff2" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-regular.svg" />
+    <None Include="wwwroot\assets\fonts\poppins\roboto-condensed-v16-latin-regular.woff2" />
+    <None Include="wwwroot\assets\img\hero-img.svg" />
+    <None Include="wwwroot\assets\img\stats-img.svg" />
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\signcss\style.css.map" />
+    <None Include="wwwroot\assets\vendor\aos\aos.cjs.js" />
+    <None Include="wwwroot\assets\vendor\aos\aos.esm.js" />
+    <None Include="wwwroot\assets\vendor\aos\aos.js" />
+    <None Include="wwwroot\assets\vendor\aos\aos.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap-icons\bootstrap-icons.scss" />
+    <None Include="wwwroot\assets\vendor\bootstrap-icons\fonts\bootstrap-icons.woff2" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.rtl.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.rtl.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.rtl.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.rtl.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-utilities.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-utilities.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-utilities.rtl.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-utilities.rtl.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.rtl.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.rtl.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.esm.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.esm.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.esm.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.esm.min.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\assets\vendor\glightbox\js\glightbox.js" />
+    <None Include="wwwroot\assets\vendor\glightbox\js\glightbox.min.js" />
+    <None Include="wwwroot\assets\vendor\isotope-layout\isotope.pkgd.js" />
+    <None Include="wwwroot\assets\vendor\isotope-layout\isotope.pkgd.min.js" />
+    <None Include="wwwroot\assets\vendor\php-email-form\validate.js" />
+    <None Include="wwwroot\assets\vendor\purecounter\purecounter_vanilla.js" />
+    <None Include="wwwroot\assets\vendor\purecounter\purecounter_vanilla.js.map" />
+    <None Include="wwwroot\assets\vendor\swiper\swiper-bundle.min.js" />
+    <None Include="wwwroot\assets\vendor\swiper\swiper-bundle.min.js.map" />
+    <None Include="wwwroot\forms\contact.php" />
   </ItemGroup>
 
   <ItemGroup>
