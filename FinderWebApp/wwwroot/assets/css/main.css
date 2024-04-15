@@ -1869,7 +1869,8 @@ section {
   width: 100%;
   position: relative;
   background: var(--color-primary);
-  padding: 60px 0 0 0;
+  padding: 100px 0 0 0;
+  margin-bottom: 100px;
 }
 
 @media (min-width: 1365px) {
