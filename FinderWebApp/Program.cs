@@ -1,9 +1,16 @@
+using Application.User.Interfaces;
+using Application.User.Services;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<ISignUpService, SignUpService>(); // ISignUpService ve SignUpService arasýndaki baðýmlýlýðý doðrulayýn
+
 
 var services = builder.Services;
 
@@ -28,5 +35,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+        name: "SignUpRoute",
+        pattern: "SignUp",
+        defaults: new { controller = "Sign", action = "SignUp" }
+    );
 
 app.Run();

@@ -1,5 +1,6 @@
 ﻿using Domain.Participant;
 using Domain.Student;
+using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
@@ -13,5 +14,6 @@ namespace Infrastructure.Data
 
         public DbSet<Student> Students { get; set; }
 		public DbSet<Participant> Participants { get; set; }
+		public DbSet<User> Users { get; set; }
     }
 }

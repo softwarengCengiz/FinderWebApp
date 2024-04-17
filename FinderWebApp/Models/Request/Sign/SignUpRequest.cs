@@ -1,6 +1,6 @@
-﻿namespace Domain.User
+﻿namespace FinderWebApp.Models.ApiRequest.Sign
 {
-    public class User
+    public class SignUpRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
