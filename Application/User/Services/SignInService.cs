@@ -1,57 +1,54 @@
-﻿using Application.Student.Contract;
-using Application.Student.Interfaces;
-using Application.User.Contract;
+﻿using Application.User.Contract;
 using Application.User.Interfaces;
 using AutoMapper;
 using Azure;
-using Domain.Student;
+using Azure.Core;
 using Domain.User;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.User.Services
 {
-    public class SignUpService : ISignUpService
+    public class SignInService : ISignInService
     {
+
         private readonly AppDbContext _db;
         private readonly IMapper _mapper;
 
-        public SignUpService(AppDbContext db, IMapper mapper)
+        public SignInService(AppDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
         }
 
-        public async Task<bool> SignUp(UserDto user)
+        public async Task<UserDto> SignIn(UserDto user)
         {
-            try
+            var currentUser = _db.Users.FirstOrDefault(x => x.Email == user.Email && x.Password == HashPassword(user.Password));
+            if (currentUser != null)
             {
-                var newUser = new Domain.User.User
+                var dto = new UserDto
                 {
-                    Id = Guid.NewGuid(),
-                    Name = user.Name,
-                    Surname = user.Surname,
-                    Email = user.Email,
-                    Password = HashPassword(user.Password),
-                    Role = user.Role
+                    Id = currentUser.Id,
+                    Name = currentUser.Name,
+                    Surname = currentUser.Surname,
+                    Email = currentUser.Email,
+                    Password = currentUser.Password,
+                    Role = currentUser.Role
                 };
-
-                _db.Users.Add(newUser);
-                _db.SaveChanges();
-
-                return true;
+                return dto;
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            
+
+            return new UserDto();
         }
+
 
         private string HashPassword(string password)
         {

@@ -8,6 +8,12 @@ using Application.User.Contract;
 using Application.User.Services;
 using AutoMapper;
 using Application.User.Interfaces;
+using FinderWebApp.Models.Request.Sign;
+using Domain.User;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinderWebApp.Controllers
 {
@@ -17,12 +23,15 @@ namespace FinderWebApp.Controllers
         #region Constructor
         private readonly IMapper mapper;
         private readonly ISignUpService signUpService;
+        private readonly ISignInService signinService;
         public SignController(
             IMapper mapper,
-            ISignUpService signUpService)
+            ISignUpService signUpService,
+            ISignInService signinService)
         {
             this.mapper = mapper;
             this.signUpService = signUpService;
+            this.signinService = signinService;
         }
         #endregion
 
@@ -50,7 +59,79 @@ namespace FinderWebApp.Controllers
 
             var result = await signUpService.SignUp(mappingModel).ConfigureAwait(false);
 
-            return View(result);
+            return RedirectToAction("Index", "Home");
         }
+
+
+        [HttpGet]
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+        
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn(SignInFormData formData)
+        {
+            var request = new SignInRequest()
+            {
+                Email = formData.Email,
+                Password = formData.Password,
+            };
+
+
+            var mappingModel = mapper.Map<SignInRequest, UserDto>(request);
+
+            var result = await signinService.SignIn(mappingModel).ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(result.Name) && !string.IsNullOrEmpty(result.Password))
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name,formData.Email)
+                };
+
+                var userIdentity = new ClaimsIdentity(claims, "User");
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                await HttpContext.SignInAsync(principal);
+
+                Response.Cookies.Append("User", result.Name);
+                Response.Cookies.Append("Password", HashPassword(formData.Password));
+                Response.Cookies.Append("Role", result.Role.ToString());
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        [Authorize]
+        public IActionResult LogOut()
+        {
+            Response.Cookies.Delete("User");
+            Response.Cookies.Delete("Password");
+            Response.Cookies.Delete("Role");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        #region Private Methods
+        private string HashPassword(string password)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // Hash the input.
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                // Convert byte array to a string.
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
+        }
+        #endregion
     }
 }
