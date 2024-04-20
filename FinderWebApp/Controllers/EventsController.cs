@@ -4,11 +4,11 @@ using System.Diagnostics;
 
 namespace FinderWebApp.Controllers
 {
-    public class BlogController : Controller
+    public class EventsController : Controller
     {
-        private readonly ILogger<BlogController> _logger;
+        private readonly ILogger<EventsController> _logger;
 
-        public BlogController(ILogger<BlogController> logger)
+        public EventsController(ILogger<EventsController> logger)
         {
             _logger = logger;
         }

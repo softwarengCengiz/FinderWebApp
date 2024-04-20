@@ -53,4 +53,9 @@ app.MapControllerRoute(
         defaults: new { controller = "Sign", action = "SignIn" }
     );
 
+app.MapControllerRoute(
+        name: "EventsRoute",
+        pattern: "Events/Index"
+    );
+
 app.Run();
