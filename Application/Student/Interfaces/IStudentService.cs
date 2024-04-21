@@ -5,6 +5,7 @@ namespace Application.Student.Interfaces
 {
     public interface IStudentService
     {
-        Task<bool> AddStudent(StudentDto request);
+        Task<Guid> AddStudent(StudentDto request);
+        Task<Guid> UpdateStudent(StudentDto request);
     }
 }

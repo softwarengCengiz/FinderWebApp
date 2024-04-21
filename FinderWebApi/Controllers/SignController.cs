@@ -26,20 +26,20 @@ namespace FinderWebApi.Controllers
         }
         #endregion
 
-        [HttpPost("AddUser")]
-        [AllowAnonymous]
-        public async Task<IActionResult> SignUp(SignUpFormData formData)
-        {
-            var mappingModel = mapper.Map<SignUpFormData, UserDto>(formData);
+        //[HttpPost("AddUser")]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> SignUp(SignUpFormData formData)
+        //{
+        //    var mappingModel = mapper.Map<SignUpFormData, UserDto>(formData);
 
-            var result = await signUpService.SignUp(mappingModel).ConfigureAwait(false);
+        //    var result = await signUpService.SignUp(mappingModel).ConfigureAwait(false);
 
-            if (result)
-            {
-                return Ok(true);
-            }
+        //    if (result)
+        //    {
+        //        return Ok(true);
+        //    }
 
-            return Ok(false);
-        }
+        //    return Ok(false);
+        //}
     }
 }

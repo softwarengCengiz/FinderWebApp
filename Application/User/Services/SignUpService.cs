@@ -27,7 +27,7 @@ namespace Application.User.Services
             _mapper = mapper;
         }
 
-        public async Task<bool> SignUp(UserDto user)
+        public async Task<Guid> SignUp(UserDto user)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Application.User.Services
                 _db.Users.Add(newUser);
                 _db.SaveChanges();
 
-                return true;
+                return newUser.Id;
             }
             catch (Exception e)
             {

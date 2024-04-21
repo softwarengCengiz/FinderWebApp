@@ -12,31 +12,50 @@ namespace Application.Student.Services
         {
             this.context = context;
         }
-        public async Task<bool> AddStudent(StudentDto request)
+        public async Task<Guid> AddStudent(StudentDto request)
         {
             try
             {
                 var student = new Domain.Student.Student
                 {
                     Id = new Guid(),
-                    Name = request.Name,
-                    Lastname = request.LastName,
-                    PhoneNumber = request.PhoneNumber,
-                    Email = request.Email,
+                    UserId = request.UserId,
                     University = request.University,
                     Department = request.Department,
                     CreatedDate = System.DateTime.Now,
                 };
 
-                await context.AddAsync(student);
+                await context.Students.AddAsync(student);
 
                 await context.SaveChangesAsync();
 
-                return true;
+                return student.Id;
             }
             catch (Exception ex)
             {
-                return false;
+                throw ex;
+            }
+        }
+
+        public async Task<Guid> UpdateStudent(StudentDto request)
+        {
+            try
+            {
+                var student = context.Students.FirstOrDefault(x => x.UserId == request.UserId);
+                if (student != null)
+                {
+                    student.Department = request.Department;
+                    student.University = request.University;
+
+                    context.Students.Update(student);
+                    context.SaveChanges();
+                }
+
+                return request.UserId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

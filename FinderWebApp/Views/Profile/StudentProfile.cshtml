@@ -1,0 +1,75 @@
+﻿@model FinderWebApp.Models.ViewModels.Profile.StudentProfileViewModel
+
+<style>
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: darkgray;
+    }
+
+    .profile-button {
+        background-color: forestgreen;
+        box-shadow: none;
+        border: none
+    }
+
+        .profile-button:hover {
+            background: darkgray;
+        }
+
+        .profile-button:focus {
+            background: darkgray;
+            box-shadow: none
+        }
+
+        .profile-button:active {
+            background: darkgray;
+            box-shadow: none
+        }
+
+    .back:hover {
+        color: darkgray;
+        cursor: pointer
+    }
+
+    .labels {
+        font-size: 11px
+    }
+
+    .add-experience:hover {
+        background: #BA68C8;
+        color: #fff;
+        cursor: pointer;
+        border: solid 1px #BA68C8
+    }
+</style>
+
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profilim</h4>
+                </div>
+                <form asp-action="StudentProfile" asp-controller="Profile" method="post">
+                    <input type="text" class="form-control" name="Id" value="@Model.User.Id" hidden>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">İsim</label><input type="text" class="form-control" name="Name" value="@Model.User.Name"></div>
+                        <div class="col-md-6"><label class="labels">Soyisim</label><input type="text" class="form-control" name="Lastname" value="@Model.User.Surname"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Telefon Numarası</label><input type="text" name="PhoneNumber" class="form-control" value="@Model.User.PhoneNumber"></div>
+                        <div class="col-md-12"><label class="labels">Email</label><input type="email" class="form-control" name="Email" value="@Model.User.Email"></div>
+                        <div class="col-md-12"><label class="labels">Üniversite</label><input type="text" class="form-control" name="University" value="@Model.Student.University"></div>
+                        <div class="col-md-12"><label class="labels">Departman</label><input type="text" class="form-control" name="Department" value="@Model.Student.Department"></div>
+                    </div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Değişiklikleri Kaydet</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

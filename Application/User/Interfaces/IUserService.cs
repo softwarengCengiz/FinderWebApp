@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.User.Interfaces
 {
-    public interface ISignUpService
+    public interface IUserService
     {
-        Task<Guid> SignUp(UserDto user);
+        Task<Guid> UpdateUser(UserDto userDto);
     }
 }

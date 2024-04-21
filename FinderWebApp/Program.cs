@@ -1,3 +1,7 @@
+using Application.Participant.Interfaces;
+using Application.Participant.Services;
+using Application.Student.Interfaces;
+using Application.Student.Services;
 using Application.User.Interfaces;
 using Application.User.Services;
 using Infrastructure.Data;
@@ -13,6 +17,9 @@ builder.Services.AddHttpClient();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<ISignUpService, SignUpService>(); 
 builder.Services.AddScoped<ISignInService, SignInService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IParticipantService, ParticipantService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x => x.LoginPath = "/Sign/SignIn");
 
@@ -51,6 +58,19 @@ app.MapControllerRoute(
         name: "SignInRoute",
         pattern: "SignIn",
         defaults: new { controller = "Sign", action = "SignIn" }
+    );
+
+app.MapControllerRoute(
+        name: "StudentProfile",
+        pattern: "Profile",
+        defaults: new { controller = "Profile", action = "StudentProfile" }
+    );
+
+
+app.MapControllerRoute(
+        name: "ParticipantProfile",
+        pattern: "Profile",
+        defaults: new { controller = "Profile", action = "ParticipantProfile" }
     );
 
 app.MapControllerRoute(

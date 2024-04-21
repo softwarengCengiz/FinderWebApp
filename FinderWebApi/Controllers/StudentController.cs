@@ -33,10 +33,10 @@ namespace FinderWebApi.Controllers
 
             var result = await studentService.AddStudent(mappingModel).ConfigureAwait(false);
 
-            if (result)
-            {
-                return Ok(true);
-            }
+            //if (result)
+            //{
+            //    return Ok(true);
+            //}
 
             return Ok(false);
         }

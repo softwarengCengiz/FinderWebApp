@@ -3,6 +3,7 @@
 
 @{
     var User = HttpContextAccessor.HttpContext?.Request.Cookies["User"];
+    var UserId = HttpContextAccessor.HttpContext?.Request.Cookies["UserId"];
     var Password = HttpContextAccessor.HttpContext?.Request.Cookies["Password"];
     var Role = HttpContextAccessor.HttpContext?.Request.Cookies["Role"];
 }
@@ -14,7 +15,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Impact Bootstrap Template - Blog</title>
+    <title>Finder.</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -77,7 +78,15 @@
                         <li class="dropdown">
                             <a href="#"><span>Hoşgeldin @User</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                             <ul>
-                                <li><a href="@Url.Action("Index","Profile")">Profilim</a></li>
+                                @if (Role == "0")
+                                {
+                                    <li><a href="@Url.RouteUrl("StudentProfile",new{id = UserId})">Profilim</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.RouteUrl("ParticipantProfile")">Profilim</a></li>
+                                }
+
                                 <li><a href="@Url.Action("LogOut","Sign")">Çıkış Yap</a></li>
                             </ul>
                         </li>

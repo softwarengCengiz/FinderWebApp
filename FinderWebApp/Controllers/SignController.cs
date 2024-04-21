@@ -14,6 +14,11 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
+using Application.Student.Interfaces;
+using FinderWebApp.Models.Request.Student;
+using Application.Student.Contract;
+using Application.Participant.Interfaces;
+using Application.Participant.Contract;
 
 namespace FinderWebApp.Controllers
 {
@@ -24,14 +29,20 @@ namespace FinderWebApp.Controllers
         private readonly IMapper mapper;
         private readonly ISignUpService signUpService;
         private readonly ISignInService signinService;
+        private readonly IStudentService studentService;
+        private readonly IParticipantService participantService;
         public SignController(
             IMapper mapper,
             ISignUpService signUpService,
-            ISignInService signinService)
+            ISignInService signinService,
+            IStudentService studentService,
+            IParticipantService participantService)
         {
             this.mapper = mapper;
             this.signUpService = signUpService;
             this.signinService = signinService;
+            this.studentService = studentService;
+            this.participantService = participantService;
         }
         #endregion
 
@@ -54,10 +65,43 @@ namespace FinderWebApp.Controllers
                 Role = formData.Role
             };
 
-
             var mappingModel = mapper.Map<SignUpRequest, UserDto>(request);
 
             var result = await signUpService.SignUp(mappingModel).ConfigureAwait(false);
+
+            if (formData.Role == 0)
+            {
+                var student = new StudentDto
+                {
+                    UserId = result
+                };
+
+                await studentService.AddStudent(student).ConfigureAwait(false);
+            }
+
+            else
+            {
+                var participant = new ParticipantDto
+                {
+                    UserId = result
+                };
+
+                await participantService.AddParticipant(participant).ConfigureAwait(false);
+            }
+
+            var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name,formData.Email)
+                };
+
+            var userIdentity = new ClaimsIdentity(claims, "User");
+            ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+            await HttpContext.SignInAsync(principal);
+
+            Response.Cookies.Append("User", request.Name);
+            Response.Cookies.Append("UserId", result.ToString());
+            Response.Cookies.Append("Password", HashPassword(formData.Password));
+            Response.Cookies.Append("Role", request.Role.ToString());
 
             return RedirectToAction("Index", "Home");
         }
@@ -68,7 +112,7 @@ namespace FinderWebApp.Controllers
         {
             return View();
         }
-        
+
 
         [HttpPost]
         public async Task<IActionResult> SignIn(SignInFormData formData)
@@ -96,6 +140,7 @@ namespace FinderWebApp.Controllers
                 await HttpContext.SignInAsync(principal);
 
                 Response.Cookies.Append("User", result.Name);
+                Response.Cookies.Append("UserId", result.Id.ToString());
                 Response.Cookies.Append("Password", HashPassword(formData.Password));
                 Response.Cookies.Append("Role", result.Role.ToString());
             }
@@ -115,7 +160,7 @@ namespace FinderWebApp.Controllers
         }
 
 
-        #region Private Methods
+        #region Private Methodd
         private string HashPassword(string password)
         {
             using (SHA256 sha256Hash = SHA256.Create())
