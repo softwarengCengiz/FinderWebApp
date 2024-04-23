@@ -61,21 +61,22 @@ app.MapControllerRoute(
     );
 
 app.MapControllerRoute(
+        name: "ParticipantProfile",
+        pattern: "ParticipantProfile",
+        defaults: new { controller = "Profile", action = "ParticipantProfile" }
+    );
+
+app.MapControllerRoute(
         name: "StudentProfile",
-        pattern: "Profile",
+        pattern: "StudentProfile",
         defaults: new { controller = "Profile", action = "StudentProfile" }
     );
 
 
 app.MapControllerRoute(
-        name: "ParticipantProfile",
-        pattern: "Profile",
-        defaults: new { controller = "Profile", action = "ParticipantProfile" }
-    );
-
-app.MapControllerRoute(
         name: "EventsRoute",
-        pattern: "Events/Index"
+        pattern: "Events",
+        defaults: new { controller = "Events", action = "Index" }
     );
 
 app.Run();

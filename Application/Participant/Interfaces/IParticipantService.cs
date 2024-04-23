@@ -6,5 +6,6 @@ namespace Application.Participant.Interfaces
     public interface IParticipantService
     {
         Task<bool> AddParticipant(ParticipantDto request);
+        Task<Guid> UpdateParticipant(ParticipantDto request);
     }
 }

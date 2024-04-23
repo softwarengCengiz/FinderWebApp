@@ -38,5 +38,29 @@ namespace Application.Participant.Services
                 return false;
             }
         }
+
+
+        public async Task<Guid> UpdateParticipant(ParticipantDto request)
+        {
+            try
+            {
+                var participant = context.Participants.FirstOrDefault(x => x.UserId == request.UserId);
+                if (participant != null)
+                {
+                    participant.Job = request.Job;
+                    participant.Company = request.Company;  
+                    participant.CV = request.CV;
+
+                    context.Participants.Update(participant);
+                    context.SaveChanges();
+                }
+
+                return request.UserId;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Domain.Student;
 using Domain.User;
+using FinderWebApp.Models.ViewModels.API;
 
 namespace FinderWebApp.Models.ViewModels.Profile
 {
@@ -7,5 +8,6 @@ namespace FinderWebApp.Models.ViewModels.Profile
     {
         public Student Student { get; set; }
         public User User { get; set; }
+        public List<University> Universities { get; set; }
     }
 }

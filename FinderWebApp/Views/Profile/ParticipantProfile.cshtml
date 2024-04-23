@@ -1,4 +1,4 @@
-﻿@model FinderWebApp.Models.ViewModels.Profile.StudentProfileViewModel
+﻿@model FinderWebApp.Models.ViewModels.Profile.ParticipantProfileViewModel
 
 <style>
 
@@ -55,7 +55,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profilim</h4>
                 </div>
-                <form asp-action="StudentProfile" asp-controller="Profile" method="post">
+                <form asp-action="ParticipantProfile" asp-controller="Profile" method="post">
                     <input type="text" class="form-control" name="Id" value="@Model.User.Id" hidden>
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">İsim</label><input type="text" class="form-control" name="Name" value="@Model.User.Name"></div>
@@ -64,26 +64,13 @@
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="labels">Telefon Numarası</label><input type="text" name="PhoneNumber" class="form-control" value="@Model.User.PhoneNumber"></div>
                         <div class="col-md-12"><label class="labels">Email</label><input type="email" class="form-control" name="Email" value="@Model.User.Email"></div>
-
-                        <div class="col-md-12">
-                            <label class="labels">Üniversite</label>
-                            <select class="form-control" name="University">
-                                <option value="">Üniversite Seçin</option>
-                                @foreach (var item in Model.Universities)
-                                {
-                                    if (item.Id.ToString() == Model.Student.University)
-                                    {
-                                        <option value="@item.Id" selected>@item.University_Name</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Id">@item.University_Name</option>
-                                    }
-
-                                }
-                            </select>
-                        </div>
-                        @* <div class="col-md-12"><label class="labels">Departman</label><input type="text" class="form-control" name="Department" value="@Model.Student.Department"></div> *@
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">Meslek</label><input type="text" name="Job" class="form-control" value="@Model.Participant.Job"></div>
+                        <div class="col-md-12"><label class="labels">Şirket</label><input type="text" name="Company" class="form-control" value="@Model.Participant.Company"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12"><label class="labels">CV</label><textarea type="text" name="CV" class="form-control">@Model.Participant.CV</textarea></div>
                     </div>
                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Değişiklikleri Kaydet</button></div>
                 </form>

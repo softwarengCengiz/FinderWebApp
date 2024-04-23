@@ -37,6 +37,7 @@ namespace Application.User.Services
                     Name = user.Name,
                     Surname = user.Surname,
                     Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
                     Password = HashPassword(user.Password),
                     Role = user.Role
                 };

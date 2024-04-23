@@ -61,6 +61,7 @@ namespace FinderWebApp.Controllers
                 Name = formData.Name,
                 Surname = formData.Surname,
                 Email = formData.Email,
+                PhoneNumber = formData.PhoneNumber,
                 Password = formData.Password,
                 Role = formData.Role
             };

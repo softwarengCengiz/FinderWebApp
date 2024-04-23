@@ -4,8 +4,9 @@
 @{
     var User = HttpContextAccessor.HttpContext?.Request.Cookies["User"];
     var UserId = HttpContextAccessor.HttpContext?.Request.Cookies["UserId"];
-    var Password = HttpContextAccessor.HttpContext?.Request.Cookies["Password"];
     var Role = HttpContextAccessor.HttpContext?.Request.Cookies["Role"];
+    var Password = HttpContextAccessor.HttpContext?.Request.Cookies["Password"];
+
 }
 
 <!DOCTYPE html>
@@ -84,7 +85,7 @@
                                 }
                                 else
                                 {
-                                    <li><a href="@Url.RouteUrl("ParticipantProfile")">Profilim</a></li>
+                                    <li><a href="@Url.RouteUrl("ParticipantProfile",new{id = UserId})">Profilim</a></li>
                                 }
 
                                 <li><a href="@Url.Action("LogOut","Sign")">Çıkış Yap</a></li>
