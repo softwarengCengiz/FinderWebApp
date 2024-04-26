@@ -1,4 +1,5 @@
 using FinderWebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -14,6 +15,13 @@ namespace FinderWebApp.Controllers
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult CreateEvent()
         {
             return View();
         }

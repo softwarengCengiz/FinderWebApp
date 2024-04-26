@@ -79,4 +79,10 @@ app.MapControllerRoute(
         defaults: new { controller = "Events", action = "Index" }
     );
 
+app.MapControllerRoute(
+        name: "CreateEvent",
+        pattern: "CreateEvent",
+        defaults: new { controller = "Events", action = "CreateEvent" }
+    );
+
 app.Run();

@@ -1,0 +1,178 @@
+﻿<style>
+
+    h1 {
+        font-weight: 700;
+        font-size: 45px;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .header {
+        margin-bottom: 80px;
+    }
+
+    #description {
+        font-size: 24px;
+    }
+
+    .form-wrap {
+        background: rgba(255,255,255,1);
+        width: 100%;
+        max-width: 850px;
+        padding: 50px;
+        margin: 0 auto;
+        position: relative;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+        text-align:center;
+    }
+
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group > label {
+            display: block;
+            font-size: 18px;
+            color: #000;
+        }
+
+    .custom-control-label {
+        color: #000;
+        font-size: 16px;
+    }
+
+    .form-control {
+        height: 50px;
+        background: #ecf0f4;
+        border-color: transparent;
+        padding: 0 15px;
+        font-size: 16px;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .form-control:focus {
+            border-color: #0b9906;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+    textarea.form-control {
+        height: 160px;
+        padding-top: 15px;
+        resize: none;
+    }
+
+    .btn {
+        padding: .657rem .75rem;
+        font-size: 18px;
+        letter-spacing: 0.050em;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #0b9906;
+        border-color: #0b9906;
+    }
+
+        .btn-primary:hover {
+            color: #0b9906;
+            background-color: #ffffff;
+            border-color: #0b9906;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        .btn-primary:focus, .btn-primary.focus {
+            color: #0b9906;
+            background-color: #ffffff;
+            border-color: #0b9906;
+            -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+        .show > .btn-primary.dropdown-toggle {
+            color: #0b9906;
+            background-color: #ffffff;
+            border-color: #0b9906;
+        }
+
+            .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+            .show > .btn-primary.dropdown-toggle:focus {
+                -webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+                -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, .1);
+            }
+</style>
+
+
+
+
+<div class="form-wrap">
+    <h1>Etkinlik Başlat</h1>
+    <form id="survey-form">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label id="name-label" for="name">Etkinlik Başlığı</label>
+                    <input type="text" name="EventHeader" id="EventHeader" class="form-control" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label id="name-label" for="name">Etkinlik Açıklaması</label>
+                    <textarea type="text" name="EventDetail" id="EventDetail" class="form-control" required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label id="name-label" for="name">Temsili Etkinlik Fotoğrafı</label>
+                    <input type="file" name="EventImage" id="EventImage" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Aktiflik Durumu</label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline1" value="1" name="IsActive" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="customRadioInline1">Aktif</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline2" value="0" name="IsActive" class="custom-control-input">
+                        <label class="custom-control-label" for="customRadioInline2">Pasif</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <button type="submit" id="submit" class="btn btn-primary btn-block">Oluştur</button>
+            </div>
+        </div>
+    </form>
+</div>
