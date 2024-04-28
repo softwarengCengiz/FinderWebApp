@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Community\Interfaces\" />
+    <Folder Include="Community\Mappings\" />
+    <Folder Include="Community\Services\" />
+  </ItemGroup>
+
 </Project>

@@ -17,5 +17,7 @@ namespace Domain.Event
         public string? EventImage { get; set; }
         public Guid Polling { get; set; }
         public bool IsActive { get; set; }
-    }
+		public DateTime CreatedDate { get; set; }
+		public DateTime ModifiedDate { get; set; }
+	}
 }

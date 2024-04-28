@@ -1,0 +1,45 @@
+﻿@model List<FinderWebApp.Models.ViewModels.Events.MyEventsViewModel>
+
+
+<div class="breadcrumbs">
+    <div class="page-header d-flex align-items-center" style="background-image: url('');">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2>Etkinliklerim</h2>
+                    @* <p>Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End Breadcrumbs -->
+
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+
+        <div class="row gy-4 posts-list mt-3">
+            @foreach (var item in Model.OrderByDescending(x=>x.CreatedDate))
+            {
+                <div class="col-xl-4 col-md-6">
+                    <article>
+                        <div class="post-img">
+                            <img src="~/files/EventsImages/@item.EventImage" alt="" class="img-fluid">
+                        </div>
+                        <h2 class="title">
+                            <a href="#">@item.EventHeader</a>
+                        </h2>
+                        <div class="d-flex align-items-center">
+                            @* <img src="assets/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0"> *@
+                            <div class="post-meta">
+                                @* <p class="post-author-list">Maria Doe</p> *@
+                                <p class="post-date">
+                                    @item.CreatedDate
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</section>

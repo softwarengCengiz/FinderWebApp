@@ -27,7 +27,7 @@
         -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
         -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
         box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
-        text-align:center;
+        text-align: center;
     }
 
 
@@ -124,13 +124,13 @@
 
 
 <div class="form-wrap">
-    <h1>Etkinlik Başlat</h1>
-    <form asp-action="CreateEvent" asp-controller="Events" method="post" id="survey-form" enctype="multipart/form-data">
+    <h1>Topluluk Oluştur</h1>
+    <form id="survey-form">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label id="name-label" for="name">Etkinlik Başlığı</label>
-                    <input type="text" name="EventHeader" id="EventHeader" class="form-control" required>
+                    <label id="name-label" for="name">Topluluk Adı</label>
+                    <input type="text" name="CommunityName" id="CommunityName" class="form-control" required>
                 </div>
             </div>
         </div>
@@ -138,8 +138,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label id="name-label" for="name">Etkinlik Açıklaması</label>
-                    <textarea type="text" name="EventDetail" id="EventDetail" class="form-control" required></textarea>
+                    <label id="name-label" for="name">Topluluk Açıklaması</label>
+                    <textarea type="text" name="CommunityDescription" id="CommunityDescription" class="form-control" required></textarea>
                 </div>
             </div>
         </div>
@@ -147,24 +147,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label id="name-label" for="name">Temsili Etkinlik Fotoğrafı</label>
-                    <input type="file" name="EventImage" id="EventImage" class="form-control">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Aktiflik Durumu</label>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline1" value="true" name="IsActive" class="custom-control-input" checked>
-                        <label class="custom-control-label" for="customRadioInline1">Aktif</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline2" value="false" name="IsActive" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadioInline2">Pasif</label>
-                    </div>
+                    <label id="name-label" for="name">Topluluk Fotoğrafı</label>
+                    <input type="file" name="CommunityImage" id="CommunityImage" class="form-control">
                 </div>
             </div>
         </div>

@@ -82,10 +82,12 @@
                                 @if (Role == "0")
                                 {
                                     <li><a href="@Url.RouteUrl("StudentProfile",new{id = UserId})">Profilim</a></li>
+                                    <li><a href="@Url.Action("Index","Community")">Topluluk İşlemleri</a></li>
                                 }
                                 else
                                 {
                                     <li><a href="@Url.RouteUrl("ParticipantProfile",new{id = UserId})">Profilim</a></li>
+                                    <li><a href="@Url.RouteUrl("MyEventsRoute",new{id = UserId})">Etkinliklerim</a></li>
                                 }
 
                                 <li><a href="@Url.Action("LogOut","Sign")">Çıkış Yap</a></li>

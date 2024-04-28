@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Community
+namespace Application.Community.Contract
 {
-    public class Community
+    public class CommunityDto
     {
-        [Key]
         public Guid CommunityId { get; set; }
         public string? CommunityMembers { get; set; }
         public string? CommunityName { get; set; }

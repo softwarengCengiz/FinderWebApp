@@ -1,3 +1,5 @@
+using Application.Events.Interfaces;
+using Application.Events.Services;
 using Application.Participant.Interfaces;
 using Application.Participant.Services;
 using Application.Student.Interfaces;
@@ -20,6 +22,7 @@ builder.Services.AddScoped<ISignInService, SignInService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IParticipantService, ParticipantService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x => x.LoginPath = "/Sign/SignIn");
 
@@ -66,6 +69,7 @@ app.MapControllerRoute(
         defaults: new { controller = "Profile", action = "ParticipantProfile" }
     );
 
+
 app.MapControllerRoute(
         name: "StudentProfile",
         pattern: "StudentProfile",
@@ -80,9 +84,23 @@ app.MapControllerRoute(
     );
 
 app.MapControllerRoute(
+		name: "MyEventsRoute",
+		pattern: "MyEvents",
+		defaults: new { controller = "Events", action = "MyEvents" }
+	);
+
+app.MapControllerRoute(
         name: "CreateEvent",
         pattern: "CreateEvent",
         defaults: new { controller = "Events", action = "CreateEvent" }
     );
+
+app.MapControllerRoute(
+        name: "CreateCommunityRoute",
+        pattern: "CreateCommunity",
+        defaults: new { controller = "Community", action = "CreateCommunity" }
+    );
+
+
 
 app.Run();
