@@ -1,0 +1,55 @@
+﻿@model FinderWebApp.Models.ViewModels.Events.MyEventsViewModel
+<style>
+
+    .event-image-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .event-image {
+        width: 100%;
+        height: auto;
+        filter: brightness(70%);
+        transition: transform 0.5s;
+    }
+
+    .event-image-container:hover .event-image {
+        transform: scale(1.1);
+    }
+</style>
+
+<div class="breadcrumbs">
+    <div class="page-header d-flex align-items-center" style="background-image: url('');">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2>@Model.EventHeader</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <div class="event-image-container mb-4">
+                <img src="~/files/eventsimages/@Model.EventImage" class="img-fluid event-image" alt="Etkinlik Görseli">
+            </div>
+            <h2 class="mt-4">Etkinlik Detayı</h2>
+            <p class="lead">@Model.EventDetail</p>
+            <div class="mt-4">
+                <form asp-controller="Events" asp-action="VoteEvent" method="get">
+                    <button type="submit" class="btn btn-primary mr-2">Oy Ver</button>
+                </form>
+                <form asp-controller="Events" asp-action="ShowVotes" method="get">
+                    <button type="button" class="btn btn-secondary">Oyları Görüntüle</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

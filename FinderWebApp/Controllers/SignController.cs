@@ -151,11 +151,13 @@ namespace FinderWebApp.Controllers
 
 
         [Authorize]
-        public IActionResult LogOut()
+        public async Task<IActionResult> LogOut()
         {
             Response.Cookies.Delete("User");
             Response.Cookies.Delete("Password");
             Response.Cookies.Delete("Role");
+
+            await HttpContext.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
         }

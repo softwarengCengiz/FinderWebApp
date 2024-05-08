@@ -11,5 +11,7 @@ namespace Application.Events.Interfaces
 	{
 		Task<Guid> CreateEvent(CreateEventRequestDto request);
 		Task<List<EventsDto>> GetMyEvents(Guid id);
+		Task<EventsDto> ShowEvent(Guid id);
+        Task<List<EventsDto>> GetAllEvents();
 	}
 }

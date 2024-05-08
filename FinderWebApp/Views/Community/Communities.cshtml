@@ -1,12 +1,11 @@
-﻿@model List<FinderWebApp.Models.ViewModels.Events.MyEventsViewModel>
+﻿@model List<FinderWebApp.Models.ViewModels.Community.CommunityViewModel>
 
 <div class="breadcrumbs">
     <div class="page-header d-flex align-items-center" style="background-image: url('');">
         <div class="container position-relative">
             <div class="row d-flex justify-content-center">
                 <div class="col-lg-6 text-center">
-                    <h2>Etkinliklerim</h2>
-                    @* <p>Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit quaerat ipsum dolorem.</p> *@
+                    <h2>Topluluklar</h2>
                 </div>
             </div>
         </div>
@@ -17,21 +16,19 @@
     <div class="container" data-aos="fade-up">
 
         <div class="row gy-4 posts-list mt-3">
-            @foreach (var item in Model.OrderByDescending(x => x.CreatedDate))
+            @foreach (var item in Model.OrderBy(x => x.CommunityName))
             {
                 <div class="col-xl-4 col-md-6">
-                    <a href="@Url.RouteUrl("ShowEventRoute",new{id = item.EventId})">
+                    <a @* href="@Url.RouteUrl("ShowEventRoute",new{id = item.EventId})" *@>
                         <article>
                             <div class="post-img">
-                                <img src="~/files/EventsImages/@item.EventImage" alt="" class="img-fluid">
+                                <img src="~/files/CommunityImages/@item.CommunityImage" alt="" class="img-fluid">
                             </div>
                             <h2 class="title">
-                                <a href="#">@item.EventHeader</a>
+                                <a href="#">@item.CommunityName</a>
                             </h2>
                             <div class="d-flex align-items-center">
-                                @* <img src="assets/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0"> *@
                                 <div class="post-meta">
-                                    @* <p class="post-author-list">Maria Doe</p> *@
                                     <p class="post-date">
                                         @item.CreatedDate
                                     </p>

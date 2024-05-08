@@ -12,5 +12,6 @@ namespace Application.Community.Contract
         public string CommunityName { get; set; }
         public string CommunityDescription { get; set; }
         public string CommunityImage { get; set; }
+        public Guid CreatorUserId { get; set; }
     }
 }

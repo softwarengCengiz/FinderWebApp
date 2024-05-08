@@ -29,7 +29,7 @@ namespace Application.Events.Services
             {
                 var newEvent = new Domain.Event.Event
                 {
-                    EventId = new Guid(),
+                    EventId = Guid.NewGuid(),
                     UserId = request.UserId,
                     EventHeader = request.EventHeader,
                     EventDetail = request.EventDetail,
@@ -48,6 +48,32 @@ namespace Application.Events.Services
             {
                 throw ex;
             }
+        }
+
+        public async Task<List<EventsDto>> GetAllEvents()
+        {
+            var events = context.Events.ToList();
+
+            var dtos = new List<EventsDto>();
+            foreach (var item in events)
+            {
+                var dto = new EventsDto
+                {
+                    EventId = item.EventId,
+                    UserId = Guid.Parse(item.UserId.ToString()),
+                    EventHeader = item.EventHeader,
+                    EventDetail = item.EventDetail,
+                    EventImage = item.EventImage,
+                    Polling = item.Polling,
+                    IsActive = item.IsActive,
+                    CreatedDate = item.CreatedDate,
+                    ModifiedDate = item.ModifiedDate
+                };
+
+                dtos.Add(dto);
+            }
+
+            return dtos;
         }
 
         public async Task<List<EventsDto>> GetMyEvents(Guid id)
@@ -74,6 +100,26 @@ namespace Application.Events.Services
             }
 
             return dtos;
+        }
+
+        public async Task<EventsDto> ShowEvent(Guid id)
+        {
+            var showEvent = context.Events.FirstOrDefault(x => x.EventId == id);
+
+            var eventDto = new EventsDto
+            {
+                EventId = showEvent.EventId,
+                UserId = Guid.Parse(showEvent.UserId.ToString()),
+                EventHeader = showEvent.EventHeader,
+                EventDetail = showEvent.EventDetail,
+                EventImage = showEvent.EventImage,
+                Polling = showEvent.Polling,
+                IsActive = showEvent.IsActive,
+                CreatedDate = showEvent.CreatedDate,
+                ModifiedDate = showEvent.ModifiedDate
+            };
+
+            return eventDto;
         }
     }
 }
