@@ -12,5 +12,6 @@
         public DateTime CreatedDate { get; set; }
         public Guid ModifierUserId { get; set; }
         public DateTime ModifiedDate { get; set; }
+        public Guid? EventId { get; set; } //Sadece oylama başlatmada kullanılır.
     }
 }

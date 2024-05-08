@@ -1,10 +1,7 @@
 ﻿using Application.Community.Contract;
 using Application.Community.Interfaces;
-using Application.Events.Contract;
-using Application.Events.Interfaces;
 using FinderWebApp.Models.Request.Community;
 using FinderWebApp.Models.ViewModels.Community;
-using FinderWebApp.Models.ViewModels.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +9,11 @@ namespace FinderWebApp.Controllers
 {
 	public class CommunityController : Controller
 	{
-        private readonly ILogger<EventsController> _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ICommunityService _communityService;
 
-        public CommunityController(ILogger<EventsController> logger, IWebHostEnvironment hostingEnvironment, ICommunityService communityService)
+        public CommunityController(IWebHostEnvironment hostingEnvironment, ICommunityService communityService)
         {
-            _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _communityService = communityService;
         }

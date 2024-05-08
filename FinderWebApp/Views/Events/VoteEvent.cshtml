@@ -1,0 +1,156 @@
+﻿@model FinderWebApp.Models.ViewModels.Events.VoteEventViewModel
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+    .progress {
+        height: 40px; /* Yükseklik artırıldı */
+        border-radius: 20px;
+        margin-bottom: 20px; /* Boşluk eklendi */
+        position: relative; /* Pozisyonu belirtildi */
+    }
+
+    .skill-bar {
+        margin-bottom: 10px; /* Boşluk eklendi */
+    }
+
+    .progress .skill .val {
+        position: absolute; /* Mutlak konumlandırma */
+        top: 50%; /* Üst kenarın yüzde 50'sine hizalanması */
+        right: 10px; /* Sağ kenardan 10 piksel içeride */
+        transform: translateY(-50%); /* Yükseklik yüzde 50'sine ayarlama */
+        font-style: normal;
+        font-weight: bold; /* Kalın font */
+    }
+
+    .progress-bar {
+        text-align: left;
+        border-radius: 20px;
+        font-size: 18px; /* Yazı boyutu */
+        background-color: #2E8B57; /* Koyu yeşil renk */
+        width: 0; /* İlerleme çubuğunun başlangıç genişliği sıfır olarak ayarlandı */
+        transition: width 2s ease-in-out; /* Animasyon */
+    }
+
+</style>
+
+
+<div class="breadcrumbs">
+    <div class="page-header d-flex align-items-center" style="background-image: url('');">
+        <div class="container position-relative">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2>@Model.Event.EventHeader</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <div class="container">
+            <ol>
+                <li>Anasayfa</li>
+                <li>Etkinlikler</li>
+                <li>@Model.Event.EventHeader</li>
+                <li>Oyları Görüntüle</li>
+            </ol>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container mt-4 mb-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-center">Mevcut Oy Durumu</h3>
+            <br>
+            @foreach (var item in Model.Pollings)
+            {
+                <p style="text-align:center;">@Model.Communities.FirstOrDefault(x => x.CommunityId == item.CommunityId).CommunityName</p>
+                <div class="progress skill-bar">
+                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@item.Quantity*100/@Model.Event.MinimumQuantity" aria-valuemin="0" aria-valuemax="100">
+                        <span class="val">@item.Quantity*100/@Model.Event.MinimumQuantity %</span>
+                    </div>
+                    <span><strong>@item.Quantity Kişi Oy Kullandı</strong></span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            @if (Model.IsCommunityOwner)
+            {
+                <a href="@Url.RouteUrl("StartPollingToEventRoute",new{eventId = Model.Event.EventId})">
+                    <h5 class="mt-4">Oylama Başlat</h5>
+                </a>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl("CreateCommunityRoute")">
+                    <h5 class="mt-4">Oylama Başlat</h5>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-controller="Polling" asp-action="VoteToEvent" method="post">
+                <div class="text-center">
+                    <h5 class="mt-4">Oy Verilecek Topluluk</h5>
+                    <select class="form-control mt-2" name="CommunityId" style="text-align:center;">
+                        <option value="">Topluluk Seçin</option>
+                        @foreach (var item in Model.Communities)
+                        {
+                            <option value="@item.CommunityId">@item.CommunityName</option>
+                        }
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.progress .progress-bar').each(function () {
+            var valuenow = parseFloat($(this).attr('aria-valuenow')); // Yüzde değerini ondalık bir sayıya dönüştürün
+            var width = valuenow + '%'; // Genişlik değerini oluşturun
+            $(this).css('width', width);
+            $(this).children('.val').text(valuenow + '%'); // Yüzde değerini içeren span elemanını güncelleyin
+
+            // Arkada kalan rengi koyulaştırma
+            var remainingColor = $(this).css('background-color');
+            var darkenedColor = darkenColor(remainingColor, 60); // Koyulaştırma miktarı burada ayarlanabilir
+
+            $(this).css('background-color', darkenedColor);
+
+            // Doluluk kısmının arka plan rengini değiştirme
+            $(this).find('.progress-bar').css('background-color', darkenedColor);
+        });
+    });
+
+    // Rengi koyulaştırmak için yardımcı bir fonksiyon
+    function darkenColor(color, amount) {
+        var rgb = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        var r = rgb[1];
+        var g = rgb[2];
+        var b = rgb[3];
+
+        // Koyulaştırma miktarını uygula
+        r = Math.max(0, r - amount);
+        g = Math.max(0, g - amount);
+        b = Math.max(0, b - amount);
+
+        // Yeni rengi döndür
+        return "rgb(" + r + ", " + g + ", " + b + ")";
+    }
+
+</script>

@@ -4,6 +4,7 @@
 	{
         public string EventHeader { get; set; }
         public string EventDetail { get; set; }
+        public int MinimumQuantity { get; set; }
         public IFormFile EventImage { get; set; }
         public bool IsActive { get; set; }
     }

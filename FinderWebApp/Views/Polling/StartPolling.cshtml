@@ -1,4 +1,5 @@
-﻿<style>
+﻿@model FinderWebApp.Models.ViewModels.Community.CommunityViewModel
+<style>
 
     h1 {
         font-weight: 700;
@@ -27,7 +28,7 @@
         -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
         -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
         box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
-        text-align:center;
+        text-align: center;
     }
 
 
@@ -123,41 +124,16 @@
 
 
 
-<div class="form-wrap">
-    <h1>Etkinlik Başlat</h1>
-    <form asp-action="CreateEvent" asp-controller="Events" method="post" id="survey-form" enctype="multipart/form-data">
+<div class="form-wrap mt-5">
+    <h1>Oylama Başlat</h1>
+    <form asp-action="StartPolling" asp-controller="Polling" method="post" id="survey-form">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label id="name-label" for="name">Etkinlik Başlığı</label>
-                    <input type="text" name="EventHeader" id="EventHeader" class="form-control" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label id="name-label" for="name">Etkinlik Açıklaması</label>
-                    <textarea type="text" name="EventDetail" id="EventDetail" class="form-control" required></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label id="name-label" for="name">Asgari Katılımcı Sayısı</label>
-                    <input type="number" name="MinimumQuantity" id="MinimumQuantity" class="form-control" required />
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label id="name-label" for="name">Temsili Etkinlik Fotoğrafı</label>
-                    <input type="file" name="EventImage" id="EventImage" class="form-control">
+                    <label id="name-label" for="name">Oylama Başlatılacak Topluluk</label>
+                    <input type="text" class="form-control" value="@Model.CommunityName" disabled readonly>
+                    <input type="text" name="CommunityId" id="CommunityId" class="form-control" value="@Model.CommunityId" required readonly hidden>
+                    <input type="text" name="EventId" id="EventId" class="form-control" value="@Model.EventId" required readonly hidden>
                 </div>
             </div>
         </div>
@@ -180,7 +156,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" id="submit" class="btn btn-primary btn-block">Oluştur</button>
+                <button type="submit" id="submit" class="btn btn-primary btn-block">Başlat</button>
             </div>
         </div>
     </form>

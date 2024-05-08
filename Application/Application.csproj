@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Community\Mappings\" />
+    <Folder Include="Polling\Mappings\" />
   </ItemGroup>
 
 </Project>

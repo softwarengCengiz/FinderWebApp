@@ -1,8 +1,13 @@
+using Application.Community.Interfaces;
 using Application.Events.Contract;
 using Application.Events.Interfaces;
+using Application.Polling.Interfaces;
+using Domain.Polling;
 using FinderWebApp.Models;
 using FinderWebApp.Models.Request.Events;
+using FinderWebApp.Models.ViewModels.Community;
 using FinderWebApp.Models.ViewModels.Events;
+using FinderWebApp.Models.ViewModels.Polling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -14,12 +19,20 @@ namespace FinderWebApp.Controllers
         private readonly ILogger<EventsController> _logger;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IEventService _eventService;
+        private readonly IPollingService _pollingService;
+        private readonly ICommunityService _communityService;
 
-        public EventsController(ILogger<EventsController> logger, IWebHostEnvironment hostingEnvironment, IEventService eventService)
+        public EventsController(ILogger<EventsController> logger,
+            IWebHostEnvironment hostingEnvironment,
+            IEventService eventService,
+            IPollingService pollingService,
+            ICommunityService communityService)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _eventService = eventService;
+            _pollingService = pollingService;
+            _communityService = communityService;
         }
 
         [AllowAnonymous]
@@ -38,6 +51,7 @@ namespace FinderWebApp.Controllers
                         UserId = Guid.Parse(item.UserId.ToString()),
                         EventHeader = item.EventHeader,
                         EventDetail = item.EventDetail,
+                        MinimumQuantity = item.MinimumQuantity,
                         EventImage = item.EventImage,
                         Polling = item.Polling,
                         IsActive = item.IsActive,
@@ -88,6 +102,7 @@ namespace FinderWebApp.Controllers
             {
                 EventHeader = request.EventHeader,
                 EventDetail = request.EventDetail,
+                MinimumQuantity = request.MinimumQuantity,
                 EventImage = uniqueImgFileName,
                 IsActive = request.IsActive,
                 UserId = Guid.Parse(userId)
@@ -116,6 +131,7 @@ namespace FinderWebApp.Controllers
                     EventHeader = item.EventHeader,
                     EventDetail = item.EventDetail,
                     EventImage = item.EventImage,
+                    MinimumQuantity = item.MinimumQuantity,
                     Polling = item.Polling,
                     IsActive = item.IsActive,
                     CreatedDate = item.CreatedDate,
@@ -137,11 +153,88 @@ namespace FinderWebApp.Controllers
                 EventHeader = currentEvent.EventHeader,
                 EventDetail = currentEvent.EventDetail,
                 EventImage = currentEvent.EventImage,
+                MinimumQuantity = currentEvent.MinimumQuantity,
                 Polling = currentEvent.Polling,
                 IsActive = currentEvent.IsActive,
                 CreatedDate = currentEvent.CreatedDate,
                 ModifiedDate = currentEvent.ModifiedDate,
             };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult VoteEvent(Guid eventId)
+        {
+            var model = new VoteEventViewModel();
+            model.Pollings = new List<PollingViewModel>();
+            model.Communities = new List<CommunityViewModel>();
+            var UserId = Request.Cookies["UserId"]; //Giriþ yapan kullanýcý
+            var currentEvent = _eventService.ShowEvent(eventId).Result; // Etkinlik
+            var currentPollings = _pollingService.GetPollingsByEvent(eventId).Result; //Etkinlik Oylarý
+            var votedCommunities = _communityService.GetVotedCommunities(currentPollings.Select(x => x.CommunityId).ToList()).Result; //Oylarýn Topluluklarý
+            var IsCommunityOwner = _communityService.GetCommunityByUserId(Guid.Parse(UserId)).Result; //Giriþ yapan kullanýcý herhangi bir topluluk sahibi mi
+            if (IsCommunityOwner != null)
+            {
+                model.IsCommunityOwner = true;
+            }
+
+            if (currentEvent != null)
+            {
+                model.Event = new MyEventsViewModel
+                {
+                    EventId = currentEvent.EventId,
+                    UserId = Guid.Parse(currentEvent.UserId.ToString()),
+                    EventHeader = currentEvent.EventHeader,
+                    EventDetail = currentEvent.EventDetail,
+                    EventImage = currentEvent.EventImage,
+                    MinimumQuantity = currentEvent.MinimumQuantity,
+                    Polling = currentEvent.Polling,
+                    IsActive = currentEvent.IsActive,
+                    CreatedDate = currentEvent.CreatedDate,
+                    ModifiedDate = currentEvent.ModifiedDate,
+                };
+            }
+
+            if (currentPollings.Any())
+            {
+                foreach (var item in currentPollings)
+                {
+                    var polling = new PollingViewModel
+                    {
+                        PollingId = item.PollingId,
+                        EventId = item.EventId,
+                        CommunityId = item.CommunityId,
+                        Quantity = item.Quantity,
+                        IsActive = item.IsActive,
+                        CreatedDate = item.CreatedDate,
+                        CreatorUserId = item.CreatorUserId,
+                        ModifiedDate = item.ModifiedDate,
+                        ModifierUserId = item.ModifierUserId
+                    };
+                    model.Pollings.Add(polling);
+                }
+            }
+
+            if (votedCommunities.Any())
+            {
+                foreach (var item in votedCommunities)
+                {
+                    var community = new CommunityViewModel
+                    {
+                        CommunityId = item.CommunityId,
+                        CommunityName = item.CommunityName,
+                        CommunityDescription = item.CommunityDescription,
+                        CommunityImage = item.CommunityImage,
+                        CreatorUserId = item.CreatorUserId,
+                        CreatedDate = item.CreatedDate,
+                        ModifierUserId = item.ModifierUserId,
+                        ModifiedDate = item.ModifiedDate,
+                        OldEventsIds = item.OldEventsIds
+                    };
+                    model.Communities.Add(community);
+                }
+            }
 
             return View(model);
         }

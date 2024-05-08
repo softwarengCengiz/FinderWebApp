@@ -4,6 +4,8 @@ using Application.Events.Interfaces;
 using Application.Events.Services;
 using Application.Participant.Interfaces;
 using Application.Participant.Services;
+using Application.Polling.Interfaces;
+using Application.Polling.Services;
 using Application.Student.Interfaces;
 using Application.Student.Services;
 using Application.User.Interfaces;
@@ -25,6 +27,7 @@ builder.Services.AddScoped<IParticipantService, ParticipantService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<ICommunityService, CommunityService>();
+builder.Services.AddScoped<IPollingService, PollingService>();
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x => x.LoginPath = "/Sign/SignIn");
 
@@ -114,6 +117,19 @@ app.MapControllerRoute(
         name: "ShowEventRoute",
         pattern: "ShowEvent",
         defaults: new { controller = "Events", action = "ShowEvent" }
+    );
+
+
+app.MapControllerRoute(
+        name: "VoteEventRoute",
+        pattern: "VoteEvent",
+        defaults: new { controller = "Events", action = "VoteEvent" }
+    );
+
+app.MapControllerRoute(
+        name: "StartPollingToEventRoute",
+        pattern: "StartPolling",
+        defaults: new { controller = "Polling", action = "StartPolling" }
     );
 
 

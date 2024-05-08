@@ -30,6 +30,15 @@
             </div>
         </div>
     </div>
+    <nav>
+        <div class="container">
+            <ol>
+                <li><a href="index.html">Anasayfa</a></li>
+                <li>Etkinlikler</li>
+                <li>@Model.EventHeader</li>
+            </ol>
+        </div>
+    </nav>
 </div>
 
 
@@ -41,15 +50,12 @@
             </div>
             <h2 class="mt-4">Etkinlik Detayı</h2>
             <p class="lead">@Model.EventDetail</p>
-            <div class="mt-4">
-                <form asp-controller="Events" asp-action="VoteEvent" method="get">
-                    <button type="submit" class="btn btn-primary mr-2">Oy Ver</button>
-                </form>
-                <form asp-controller="Events" asp-action="ShowVotes" method="get">
-                    <button type="button" class="btn btn-secondary">Oyları Görüntüle</button>
-                </form>
-
-            </div>
+            @*             <div class="mt-4">
+            <a href="@Url.RouteUrl("VoteEventRoute",new{eventId = Model.EventId})" class="btn btn-primary mr-2">Oyları Görüntüle</a>
+            </div> *@
+            <a href="@Url.RouteUrl("VoteEventRoute",new{eventId = Model.EventId})">
+                <h5 class="mt-4">Oyları Görüntüle</h5>
+            </a>
         </div>
     </div>
 </div>

@@ -33,6 +33,7 @@ namespace Application.Events.Services
                     UserId = request.UserId,
                     EventHeader = request.EventHeader,
                     EventDetail = request.EventDetail,
+                    MinimumQuantity = request.MinimumQuantity,
                     EventImage = request.EventImage,
                     IsActive = request.IsActive,
                     CreatedDate = DateTime.Now
@@ -63,6 +64,7 @@ namespace Application.Events.Services
                     UserId = Guid.Parse(item.UserId.ToString()),
                     EventHeader = item.EventHeader,
                     EventDetail = item.EventDetail,
+                    MinimumQuantity = item.MinimumQuantity,
                     EventImage = item.EventImage,
                     Polling = item.Polling,
                     IsActive = item.IsActive,
@@ -90,6 +92,7 @@ namespace Application.Events.Services
                     EventHeader = myEvent.EventHeader,
                     EventDetail = myEvent.EventDetail,
                     EventImage = myEvent.EventImage,
+                    MinimumQuantity=myEvent.MinimumQuantity,
                     Polling = myEvent.Polling,
                     IsActive = myEvent.IsActive,
                     CreatedDate = myEvent.CreatedDate,
@@ -105,21 +108,22 @@ namespace Application.Events.Services
         public async Task<EventsDto> ShowEvent(Guid id)
         {
             var showEvent = context.Events.FirstOrDefault(x => x.EventId == id);
-
-            var eventDto = new EventsDto
+            var dto = new EventsDto();
+            if (showEvent != null)
             {
-                EventId = showEvent.EventId,
-                UserId = Guid.Parse(showEvent.UserId.ToString()),
-                EventHeader = showEvent.EventHeader,
-                EventDetail = showEvent.EventDetail,
-                EventImage = showEvent.EventImage,
-                Polling = showEvent.Polling,
-                IsActive = showEvent.IsActive,
-                CreatedDate = showEvent.CreatedDate,
-                ModifiedDate = showEvent.ModifiedDate
-            };
+                dto.EventId = showEvent.EventId;
+                dto.UserId = Guid.Parse(showEvent.UserId.ToString());
+                dto.EventHeader = showEvent.EventHeader;
+                dto.EventDetail = showEvent.EventDetail;
+                dto.EventImage = showEvent.EventImage;
+                dto.MinimumQuantity = showEvent.MinimumQuantity;
+                dto.Polling = showEvent.Polling;
+                dto.IsActive = showEvent.IsActive;
+                dto.CreatedDate = showEvent.CreatedDate;
+                dto.ModifiedDate = showEvent.ModifiedDate;
+            }
 
-            return eventDto;
+            return dto;
         }
     }
 }
