@@ -1,5 +1,10 @@
 ﻿@model FinderWebApp.Models.ViewModels.Events.VoteEventViewModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@{
+    var userId = HttpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+}
 
 <style>
     .progress {
@@ -61,60 +66,93 @@
     <div class="row">
         <div class="col-md-12">
             <h3 class="text-center">Mevcut Oy Durumu</h3>
+            <span><strong>@Model.Event.MinimumQuantity Oy Gerekli*</strong></span>
             <br>
             @foreach (var item in Model.Pollings)
             {
-                <p style="text-align:center;">@Model.Communities.FirstOrDefault(x => x.CommunityId == item.CommunityId).CommunityName</p>
+                var communityName = Model.Communities.FirstOrDefault(x => x.CommunityId == item.CommunityId).CommunityName;
+                var percentage = (double)item.Quantity * 100 / Model.Event.MinimumQuantity;
+                var formattedPercentage = Math.Round((decimal)percentage, 2);
+
+                <p style="text-align:center;">@communityName</p>
                 <div class="progress skill-bar">
-                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@item.Quantity*100/@Model.Event.MinimumQuantity" aria-valuemin="0" aria-valuemax="100">
-                        <span class="val">@item.Quantity*100/@Model.Event.MinimumQuantity %</span>
+                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@percentage" aria-valuemin="0" aria-valuemax="100">
+                        <span style="margin: 0 0 0 10px;"><strong>@item.Quantity Kişi Oy Kullandı</strong></span>
                     </div>
-                    <span><strong>@item.Quantity Kişi Oy Kullandı</strong></span>
+                    <span style="margin: 0 0 0 10px;"><strong>@formattedPercentage %</strong></span>
                 </div>
             }
+
         </div>
     </div>
 </div>
 
 
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-md-6 offset-md-3 text-center">
-            @if (Model.IsCommunityOwner)
-            {
-                <a href="@Url.RouteUrl("StartPollingToEventRoute",new{eventId = Model.Event.EventId})">
-                    <h5 class="mt-4">Oylama Başlat</h5>
-                </a>
-            }
-            else
-            {
-                <a href="@Url.RouteUrl("CreateCommunityRoute")">
-                    <h5 class="mt-4">Oylama Başlat</h5>
-                </a>
-            }
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <form asp-controller="Polling" asp-action="VoteToEvent" method="post">
-                <div class="text-center">
-                    <h5 class="mt-4">Oy Verilecek Topluluk</h5>
-                    <select class="form-control mt-2" name="CommunityId" style="text-align:center;">
-                        <option value="">Topluluk Seçin</option>
-                        @foreach (var item in Model.Communities)
-                        {
-                            <option value="@item.CommunityId">@item.CommunityName</option>
-                        }
-                    </select>
+@if (Model.Pollings.Any(x => x.Quantity >= Model.Event.MinimumQuantity))
+{
+    if (Model.Pollings.FirstOrDefault(x => x.Quantity >= Model.Event.MinimumQuantity).CreatorUserId == Guid.Parse(userId))
+    {
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <a href="@Url.RouteUrl("StartConversationRoute")">
+                        <h5 class="mt-4">Konuşma Başlat</h5>
+                    </a>
                 </div>
-            </form>
+            </div>
+        </div>
+    }
+}
+
+@* Oylama bitmediyse göster *@
+@if (!Model.Pollings.Any(x => x.Quantity >= Model.Event.MinimumQuantity))
+{
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 text-center">
+                @if (Model.IsCommunityOwner)
+                {
+                    <a href="@Url.RouteUrl("StartPollingToEventRoute",new{eventId = Model.Event.EventId})">
+                        <h5 class="mt-4">Oylama Başlat</h5>
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl("CreateCommunityRoute")">
+                        <h5 class="mt-4">Oylama Başlat</h5>
+                    </a>
+                }
+            </div>
         </div>
     </div>
-</div>
+
+
+    <p style="text-align:center; margin:10px; 0 0 0;"><strong>Veya</strong></p>
+
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form asp-controller="Polling" asp-action="VoteToEvent" method="post">
+                    <div class="text-center">
+                        <h5 class="mt-4">Oy Verilecek Topluluk</h5>
+                        <input name="EventId" value="@Model.Event.EventId" hidden readonly />
+                        <select class="form-control mt-2" name="CommunityId" style="text-align:center;" required>
+                            <option value="">Topluluk Seçin</option>
+                            @foreach (var item in Model.Communities)
+                            {
+                                <option value="@item.CommunityId">@item.CommunityName</option>
+                            }
+                        </select>
+                        <button type="submit" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
+                            <h6 class="mt-4" style="text-decoration: none; color:green;">*Oy Ver*</h6>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
 
 
 

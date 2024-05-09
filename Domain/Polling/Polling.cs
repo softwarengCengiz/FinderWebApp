@@ -13,6 +13,7 @@ namespace Domain.Polling
         public Guid PollingId { get; set; }
         public Guid EventId { get; set; }
         public Guid CommunityId { get; set; }
+        public string VotedUserIds { get; set; }
         public int Quantity { get; set; }
         public bool IsActive { get; set; }
         public Guid CreatorUserId { get; set; }

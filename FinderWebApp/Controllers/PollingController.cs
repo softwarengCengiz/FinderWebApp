@@ -4,6 +4,7 @@ using Application.Polling.Interfaces;
 using Domain.Community;
 using FinderWebApp.Models.Request.Polling;
 using FinderWebApp.Models.ViewModels.Community;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinderWebApp.Controllers
@@ -20,6 +21,7 @@ namespace FinderWebApp.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult StartPolling(Guid eventId)
         {
             var model = new CommunityViewModel();
@@ -43,6 +45,7 @@ namespace FinderWebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult StartPolling(StartPollingRequest request)
         {
             var UserId = Request.Cookies["UserId"];
@@ -57,6 +60,34 @@ namespace FinderWebApp.Controllers
             _pollingService.CreatePolling(pollingDto);
 
             return Redirect("/VoteEvent?eventId=" + request.EventId);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult VoteToEvent(VoteToEventRequest request)
+        {
+            var userId = Request.Cookies["UserId"];
+            var voteToEventDto = new VoteToEventDto
+            {
+                EventId = request.EventId,
+                CommunityId = request.CommunityId,
+                UserId = Guid.Parse(userId)
+            };
+
+            var result = _pollingService.VoteToEvent(voteToEventDto).Result;
+            if (result)
+            {
+                return Redirect("/VoteEvent?eventId=" + request.EventId);
+            }
+
+            return Redirect("/VoteEvent?eventId=" + request.EventId);
+        }
+
+
+        [Authorize]
+        public IActionResult StartConversation()
+        {
+            return View();
         }
     }
 }

@@ -132,6 +132,12 @@ app.MapControllerRoute(
         defaults: new { controller = "Polling", action = "StartPolling" }
     );
 
+app.MapControllerRoute(
+        name: "StartConversationRoute",
+        pattern: "StartConversation",
+        defaults: new { controller = "Polling", action = "StartConversation" }
+    );
+
 
 
 app.Run();

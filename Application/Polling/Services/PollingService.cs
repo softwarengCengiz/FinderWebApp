@@ -21,21 +21,28 @@ namespace Application.Polling.Services
         {
             try
             {
-                var newPolling = new Domain.Polling.Polling
-                {
-                    PollingId  = Guid.NewGuid(),
-                    EventId =dto.EventId,
-                    CommunityId = dto.CommunityId,
-                    Quantity = 1,
-                    IsActive = true,
-                    CreatorUserId = dto.CreatorUserId,
-                    CreatedDate = DateTime.Now
-                };
 
-                context.Pollings.Add(newPolling);
-                context.SaveChanges();
+                //Aynı etkinlik için oylama başlatan kişi daha başlatamaz!
+                var events = context.Pollings.Where(x => x.EventId == dto.EventId).ToList();
+                if (!events.Select(x=>x.CreatorUserId).Contains(dto.CreatorUserId)) {
+                    var newPolling = new Domain.Polling.Polling
+                    {
+                        PollingId = Guid.NewGuid(),
+                        EventId = dto.EventId,
+                        CommunityId = dto.CommunityId,
+                        VotedUserIds = dto.CreatorUserId.ToString() + ";",
+                        Quantity = 1,
+                        IsActive = true,
+                        CreatorUserId = dto.CreatorUserId,
+                        CreatedDate = DateTime.Now
+                    };
 
-                return newPolling.PollingId;
+                    context.Pollings.Add(newPolling);
+                    context.SaveChanges();
+
+                    return newPolling.PollingId;
+                }
+                return Guid.NewGuid();
             }
             catch (Exception)
             {
@@ -67,6 +74,28 @@ namespace Application.Polling.Services
             }
 
             return dtos;
+        }
+
+        public async Task<bool> VoteToEvent(VoteToEventDto dto)
+        {
+            var currentPolling = context.Pollings.FirstOrDefault(x=>x.EventId == dto.EventId && x.CommunityId == dto.CommunityId);
+
+            if (currentPolling != null)
+            {
+                var votedUsers = currentPolling.VotedUserIds.Split(';'); 
+
+                if (!votedUsers.Contains(dto.UserId.ToString())) //Oy kullanmış olan kişi aynı etkinlik için daha oy kullanamaz!
+                {
+                    currentPolling.Quantity += 1;
+                    currentPolling.VotedUserIds = currentPolling.VotedUserIds + dto.UserId + ";";
+
+                    context.Pollings.Update(currentPolling);
+                    context.SaveChanges();
+
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

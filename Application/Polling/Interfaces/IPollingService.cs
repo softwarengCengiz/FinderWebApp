@@ -11,5 +11,6 @@ namespace Application.Polling.Interfaces
     {
         Task<List<PollingDto>> GetPollingsByEvent(Guid eventId);
         Task<Guid> CreatePolling(PollingDto dto);
+        Task<bool> VoteToEvent(VoteToEventDto dto);
     }
 }
