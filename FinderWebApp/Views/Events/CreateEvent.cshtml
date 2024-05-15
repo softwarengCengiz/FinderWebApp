@@ -188,9 +188,10 @@
 
 <script>
     function createForm() {
+        setTimeout(() => {
         if (document.getElementById('EventHeader').value != '' && document.getElementById('EventDetail').value != '' && document.getElementById('MinimumQuantity').value != '') {
             swal("Başarılı!", "İşleminiz başarıyla kaydedilmiştir.", "success");
-            event.preventDefault();
+            }, "5000");
         }
         else {
             swal("Hatalı!", "Eksik alanları doldurunuz", "error")
