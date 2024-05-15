@@ -58,12 +58,12 @@
                 <form asp-action="StudentProfile" asp-controller="Profile" method="post">
                     <input type="text" class="form-control" name="Id" value="@Model.User.Id" hidden>
                     <div class="row mt-2">
-                        <div class="col-md-6"><label class="labels">İsim</label><input type="text" class="form-control" name="Name" value="@Model.User.Name"></div>
-                        <div class="col-md-6"><label class="labels">Soyisim</label><input type="text" class="form-control" name="Lastname" value="@Model.User.Surname"></div>
+                        <div class="col-md-6"><label class="labels">İsim</label><input id="name" type="text" class="form-control" name="Name" value="@Model.User.Name" required></div>
+                        <div class="col-md-6"><label class="labels">Soyisim</label><input id="surname" type="text" class="form-control" name="Lastname" value="@Model.User.Surname" required></div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Telefon Numarası</label><input type="text" name="PhoneNumber" class="form-control" value="@Model.User.PhoneNumber"></div>
-                        <div class="col-md-12"><label class="labels">Email</label><input type="email" class="form-control" name="Email" value="@Model.User.Email"></div>
+                        <div class="col-md-12"><label class="labels">Telefon Numarası</label><input id="phoneNumber" type="text" name="PhoneNumber" class="form-control" value="@Model.User.PhoneNumber" required></div>
+                        <div class="col-md-12"><label class="labels">Email</label><input id="eMail" type="email" class="form-control" name="Email" value="@Model.User.Email" required></div>
 
                         <div class="col-md-12">
                             <label class="labels">Üniversite</label>
@@ -85,9 +85,21 @@
                         </div>
                         @* <div class="col-md-12"><label class="labels">Departman</label><input type="text" class="form-control" name="Department" value="@Model.Student.Department"></div> *@
                     </div>
-                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Değişiklikleri Kaydet</button></div>
+                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" onclick="submitForm()">Değişiklikleri Kaydet</button></div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function submitForm() {
+        if (document.getElementById('name').value != '' && document.getElementById('surname').value != '' && document.getElementById('phoneNumber').value != '' &&
+            document.getElementById('eMail').value != '') {
+            swal("Başarılı!", "İşleminiz başarıyla kaydedilmiştir.", "success");
+        }
+        else {
+            swal("Hatalı!", "Eksik alanları doldurunuz", "error")
+        }
+    }
+</script>
