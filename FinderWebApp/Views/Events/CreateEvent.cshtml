@@ -180,8 +180,19 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" id="submit" class="btn btn-primary btn-block">Oluştur</button>
+                <button type="submit" id="submit" class="btn btn-primary btn-block" onclick="createForm()">Oluştur</button>
             </div>
         </div>
     </form>
 </div>
+
+<script>
+    function createForm() {
+        if (document.getElementById('EventHeader').value != '' && document.getElementById('EventDetail').value != '' && document.getElementById('MinimumQuantity').value != '') {
+            swal("Başarılı!", "İşleminiz başarıyla kaydedilmiştir.", "success");
+        }
+        else {
+            swal("Hatalı!", "Eksik alanları doldurunuz", "error")
+        }
+    }
+</script>
