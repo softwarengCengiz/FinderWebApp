@@ -27,7 +27,7 @@
         -webkit-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
         -moz-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
         box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
-        text-align:center;
+        text-align: center;
     }
 
 
@@ -190,6 +190,7 @@
     function createForm() {
         if (document.getElementById('EventHeader').value != '' && document.getElementById('EventDetail').value != '' && document.getElementById('MinimumQuantity').value != '') {
             swal("Başarılı!", "İşleminiz başarıyla kaydedilmiştir.", "success");
+            event.preventDefault();
         }
         else {
             swal("Hatalı!", "Eksik alanları doldurunuz", "error")
