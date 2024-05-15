@@ -173,10 +173,14 @@ namespace FinderWebApp.Controllers
             var currentEvent = _eventService.ShowEvent(eventId).Result; // Etkinlik
             var currentPollings = _pollingService.GetPollingsByEvent(eventId).Result; //Etkinlik Oylarý
             var votedCommunities = _communityService.GetVotedCommunities(currentPollings.Select(x => x.CommunityId).ToList()).Result; //Oylarýn Topluluklarý
-            var IsCommunityOwner = _communityService.GetCommunityByUserId(Guid.Parse(UserId)).Result; //Giriþ yapan kullanýcý herhangi bir topluluk sahibi mi
-            if (IsCommunityOwner != null)
+
+            if (!string.IsNullOrEmpty(UserId))
             {
-                model.IsCommunityOwner = true;
+                var IsCommunityOwner = _communityService.GetCommunityByUserId(Guid.Parse(UserId)); //Giriþ yapan kullanýcý herhangi bir topluluk sahibi mi
+                if (IsCommunityOwner.Result != null)
+                {
+                    model.IsCommunityOwner = true;
+                }
             }
 
             if (currentEvent != null)

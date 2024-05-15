@@ -53,7 +53,7 @@ namespace Application.Polling.Services
 
         public async Task<List<PollingDto>> GetPollingsByEvent(Guid eventId)
         {
-            var pollings = context.Pollings.ToList();
+            var pollings = context.Pollings.Where(x=>x.EventId == eventId).ToList();
             var dtos = new List<PollingDto>();
 
             foreach (var item in pollings)
