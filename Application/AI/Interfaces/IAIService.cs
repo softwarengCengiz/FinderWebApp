@@ -8,6 +8,6 @@ namespace Application.AI.Interfaces
 {
     public interface IAIService
     {
-        Task<string> GetResponseAsync(string input);
+        //Task<string> GetResponseAsync(string input);
     }
 }

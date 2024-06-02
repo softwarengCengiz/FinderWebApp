@@ -21,12 +21,12 @@ namespace FinderWebApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetChatResponse(string userInput)
-        {
-            var response = await _aiService.GetResponseAsync(userInput);
-            return Json(new { response });
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> GetChatResponse(string userInput)
+        //{
+        //    var response = await _aiService.GetResponseAsync(userInput);
+        //    return Json(new { response });
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
