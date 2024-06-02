@@ -4,6 +4,7 @@
 
 @{
     var userId = HttpContextAccessor.HttpContext?.Request.Cookies["UserId"];
+    var role = HttpContextAccessor.HttpContext?.Request.Cookies["Role"];
 }
 
 <style>
@@ -104,56 +105,69 @@
     }
 }
 
-@* Oylama bitmediyse göster *@
-@if (!Model.Pollings.Any(x => x.Quantity >= Model.Event.MinimumQuantity))
+@if (role == "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9")
 {
-    <div class="container mt-3">
-        <div class="row">
-            <div class="col-md-6 offset-md-3 text-center">
-                @if (Model.IsCommunityOwner)
-                {
-                    <a href="@Url.RouteUrl("StartPollingToEventRoute",new{eventId = Model.Event.EventId})">
-                        <h5 class="mt-4">Oylama Başlat</h5>
-                    </a>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl("CreateCommunityRoute")">
-                        <h5 class="mt-4">Oylama Başlat</h5>
-                    </a>
-                }
+    @* Oylama bitmediyse göster *@
+    @if (!Model.Pollings.Any(x => x.Quantity >= Model.Event.MinimumQuantity))
+    {
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 text-center">
+                    @if (Model.IsCommunityOwner)
+                    {
+                        <a href="@Url.RouteUrl("StartPollingToEventRoute",new{eventId = Model.Event.EventId})">
+                            <h5 class="mt-4">Oylama Başlat</h5>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl("CreateCommunityRoute")">
+                            <h5 class="mt-4">Oylama Başlat</h5>
+                        </a>
+                    }
+                </div>
             </div>
         </div>
-    </div>
 
 
-    <p style="text-align:center; margin:10px; 0 0 0;"><strong>Veya</strong></p>
+        <p style="text-align:center; margin:10px; 0 0 0;"><strong>Veya</strong></p>
 
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <form asp-controller="Polling" asp-action="VoteToEvent" method="post">
-                    <div class="text-center">
-                        <h5 class="mt-4">Oy Verilecek Topluluk</h5>
-                        <input name="EventId" value="@Model.Event.EventId" hidden readonly />
-                        <select class="form-control mt-2" name="CommunityId" style="text-align:center;" required>
-                            <option value="">Topluluk Seçin</option>
-                            @foreach (var item in Model.Communities)
-                            {
-                                <option value="@item.CommunityId">@item.CommunityName</option>
-                            }
-                        </select>
-                        <button type="submit" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
-                            <h6 class="mt-4" style="text-decoration: none; color:green;">*Oy Ver*</h6>
-                        </button>
-                    </div>
-                </form>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <form asp-controller="Polling" asp-action="VoteToEvent" method="post">
+                        <div class="text-center">
+                            <h5 class="mt-4">Oy Verilecek Topluluk</h5>
+                            <input name="EventId" value="@Model.Event.EventId" hidden readonly />
+                            <select class="form-control mt-2" name="CommunityId" style="text-align:center;" required>
+                                <option value="">Topluluk Seçin</option>
+                                @foreach (var item in Model.Communities)
+                                {
+                                    <option value="@item.CommunityId">@item.CommunityName</option>
+                                }
+                            </select>
+                            <button type="submit" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
+                                <h6 class="mt-4" style="text-decoration: none; color:green;">*Oy Ver*</h6>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    }
 }
 
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 text-center">
+            <form asp-controller="Events" asp-action="DeleteEventByOwner" method="post">
+                <input name="eventId" value="@Model.Event.EventId" hidden/>
+                <button type="submit" class="mt-4" style="color:red;">Etkinliği Sil</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 <script>

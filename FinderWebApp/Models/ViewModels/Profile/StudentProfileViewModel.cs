@@ -9,5 +9,6 @@ namespace FinderWebApp.Models.ViewModels.Profile
         public Student Student { get; set; }
         public User User { get; set; }
         public List<University> Universities { get; set; }
+        public string Community { get; set; }
     }
 }

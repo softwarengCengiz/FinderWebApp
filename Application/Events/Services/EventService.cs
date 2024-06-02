@@ -4,6 +4,8 @@ using AutoMapper;
 using AutoMapper.Configuration;
 using Domain.Event;
 using Infrastructure.Data;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,9 +53,40 @@ namespace Application.Events.Services
             }
         }
 
+        public async Task<bool> DeleteEventByOwnerAsync(Guid eventId)
+        {
+            try
+            {
+                Console.WriteLine("Event güncelleme işlemi başlatıldı.");
+
+                var currentEvent = context.Events.FirstOrDefaultAsync(x => x.EventId == eventId).Result;
+                if (currentEvent != null)
+                {
+                    Console.WriteLine("IsActive alanı güncelleniyor.");
+
+                    currentEvent.IsActive = false;
+                    context.Events.Update(currentEvent);
+                    context.SaveChanges();
+
+                    Console.WriteLine("Event güncellemesi başarılı.");
+
+                    return true;
+                }
+                Console.WriteLine("Event bulunamadı.");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Hata mesajını loglamak için
+                Console.WriteLine($"Hata: {ex.Message}");
+                throw;
+            }
+        }
+
+
         public async Task<List<EventsDto>> GetAllEvents()
         {
-            var events = context.Events.ToList();
+            var events = context.Events.Where(x=>x.IsActive).ToList();
 
             var dtos = new List<EventsDto>();
             foreach (var item in events)
@@ -80,7 +113,7 @@ namespace Application.Events.Services
 
         public async Task<List<EventsDto>> GetMyEvents(Guid id)
         {
-            var myEvents = context.Events.Where(x => x.UserId == id).ToList();
+            var myEvents = context.Events.Where(x => x.UserId == id && x.IsActive).ToList();
 
             var dtos = new List<EventsDto>();
             foreach (var myEvent in myEvents)
@@ -92,7 +125,7 @@ namespace Application.Events.Services
                     EventHeader = myEvent.EventHeader,
                     EventDetail = myEvent.EventDetail,
                     EventImage = myEvent.EventImage,
-                    MinimumQuantity=myEvent.MinimumQuantity,
+                    MinimumQuantity = myEvent.MinimumQuantity,
                     Polling = myEvent.Polling,
                     IsActive = myEvent.IsActive,
                     CreatedDate = myEvent.CreatedDate,

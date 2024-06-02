@@ -1,21 +1,16 @@
-﻿using Application.Common;
-using FinderWebApp.Models.ApiRequest.Sign;
+﻿using FinderWebApp.Models.ApiRequest.Sign;
 using FinderWebApp.Models.ViewModels.Sign;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using System.Text;
 using Application.User.Contract;
-using Application.User.Services;
 using AutoMapper;
 using Application.User.Interfaces;
 using FinderWebApp.Models.Request.Sign;
-using Domain.User;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
 using Application.Student.Interfaces;
-using FinderWebApp.Models.Request.Student;
 using Application.Student.Contract;
 using Application.Participant.Interfaces;
 using Application.Participant.Contract;
@@ -101,8 +96,7 @@ namespace FinderWebApp.Controllers
 
             Response.Cookies.Append("User", request.Name);
             Response.Cookies.Append("UserId", result.ToString());
-            Response.Cookies.Append("Password", HashPassword(formData.Password));
-            Response.Cookies.Append("Role", request.Role.ToString());
+            Response.Cookies.Append("Role", HashPassword(request.Role.ToString()));
 
             return RedirectToAction("Index", "Home");
         }
@@ -142,8 +136,7 @@ namespace FinderWebApp.Controllers
 
                 Response.Cookies.Append("User", result.Name);
                 Response.Cookies.Append("UserId", result.Id.ToString());
-                Response.Cookies.Append("Password", HashPassword(formData.Password));
-                Response.Cookies.Append("Role", result.Role.ToString());
+                Response.Cookies.Append("Role", HashPassword(result.Role.ToString()));
             }
 
             return RedirectToAction("Index", "Home");
@@ -154,8 +147,8 @@ namespace FinderWebApp.Controllers
         public async Task<IActionResult> LogOut()
         {
             Response.Cookies.Delete("User");
-            Response.Cookies.Delete("Password");
             Response.Cookies.Delete("Role");
+            Response.Cookies.Delete("UserId");
 
             await HttpContext.SignOutAsync();
 
