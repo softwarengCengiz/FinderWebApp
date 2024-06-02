@@ -1,0 +1,63 @@
+﻿@model FinderWebApp.Models.ViewModels.Profile.CVUserViewModel
+<style>
+    .profile-container {
+        margin-top: 50px;
+    }
+
+    .profile-card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .profile-info {
+        margin-left: 20px;
+    }
+</style>
+
+
+<div class="container profile-container mt-4 mb-4">
+    <div class="row justify-content-center mb-4 mt-4">
+        <div class="col-md-8 mb-4 mt-4">
+            <div class="profile-card d-flex align-items-center mb-4 mt-4">
+                @if (Model.Role == 0)
+                {
+                    if (!string.IsNullOrEmpty(Model.Photo))
+                    {
+                        <img src="~/files/ProfileImages/StudentImages/@Model.Photo" alt="Profile Image" class="profile-image">
+                    }
+                    else
+                    {
+                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="Profile Image" class="profile-image">                    
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Model.Photo))
+                    {
+                        <img src="~/files/ProfileImages/ParticipantImages/@Model.Photo" alt="Profile Image" class="profile-image">
+                    }
+                    else
+                    {
+                        <img src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="Profile Image" class="profile-image">
+                    }
+                }
+                <div class="profile-info">
+                    <h2>@Model.Name @Model.Surname </h2>
+                    <p><strong>Meslek:</strong> @Model.Job</p>
+                    <p><strong>Çalıştığı Şirket:</strong> @Model.Company</p>
+                    <p><strong>Email:</strong> <a href="mailto:email@example.com"> @Model.Email</a></p>
+                    <p><strong>Özgeçmiş:</strong> @Model.CV</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

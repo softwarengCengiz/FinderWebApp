@@ -13,5 +13,6 @@ namespace Application.Events.Interfaces
 		Task<List<EventsDto>> GetMyEvents(Guid id);
 		Task<EventsDto> ShowEvent(Guid id);
         Task<List<EventsDto>> GetAllEvents();
+        Task<bool> DeleteEventByOwnerAsync(Guid eventId);
 	}
 }

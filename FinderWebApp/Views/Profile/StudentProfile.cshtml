@@ -48,7 +48,18 @@
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                @if (!string.IsNullOrEmpty(Model.User.Photo))
+                {
+                    <img id="profileImage" class="rounded-circle mt-5" width="150px" src="~/files/ProfileImages/StudentImages/@Model.User.Photo">
+                }
+                else
+                {
+                    <img id="profileImage" class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                }
+                <input type="file" id="fileInput" style="display: none;">
+                <input type="text" id="userId" style="display: none;" hidden value="@Model.User.Id">
+            </div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -64,6 +75,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="labels">Telefon Numarası</label><input id="phoneNumber" type="text" name="PhoneNumber" class="form-control" value="@Model.User.PhoneNumber" required></div>
                         <div class="col-md-12"><label class="labels">Email</label><input id="eMail" type="email" class="form-control" name="Email" value="@Model.User.Email" required></div>
+                        <div class="col-md-12"><label class="labels">Topluluk</label><input type="text" class="form-control" value="@Model.Community" readonly></div>
 
                         <div class="col-md-12">
                             <label class="labels">Üniversite</label>
@@ -102,4 +114,42 @@
             swal("Hatalı!", "Eksik alanları doldurunuz", "error")
         }
     }
+
+
+
+    document.getElementById('profileImage').addEventListener('click', function () {
+        document.getElementById('fileInput').click();
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        var userId = document.getElementById('userId').value;
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('profileImage').src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+
+
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('userId', userId);
+            formData.append('flag', '2');
+
+            $.ajax({
+                url: '@Url.Action("ChangeProfilePhoto", "Profile")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log('Dosya başarıyla yüklendi');
+                },
+                error: function (jqXHR, textStatus, errorMessage) {
+                    console.error('Dosya yüklenirken hata oluştu: ' + errorMessage);
+                }
+            });
+        }
+    });
 </script>

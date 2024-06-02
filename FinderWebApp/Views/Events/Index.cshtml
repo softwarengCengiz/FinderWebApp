@@ -33,16 +33,16 @@
                                     <img src="~/files/EventsImages/@item.EventImage" alt="" class="img-fluid">
                                 </div>
                                 <h2 class="title">
-                                    <a href="#">@item.EventHeader</a>
+                                    @item.EventHeader
                                 </h2>
                                 <div class="d-flex align-items-center">
                                     <div class="post-meta">
                                         <p class="post-date">
                                             @item.CreatedDate.ToString("dd.MM.yyyy")
                                         </p>
-                                        <p>
-                                            
-                                        </p>
+                                        <a href="@Url.RouteUrl("UserCVProfileRoute",new{userId = item.UserId})">
+                                            @item.UserName
+                                        </a>
                                     </div>
                                 </div>
                             </article>
@@ -50,14 +50,6 @@
                     </div>
                 }
             </div>
-@* 
-            <div class="blog-pagination">
-                <ul class="justify-content-center">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                </ul>
-            </div> *@
 
         </div>
     </section>
