@@ -21,52 +21,6 @@ namespace Application.User.Services
             this.context = context;
             _mapper = mapper;
         }
-
-        public async Task<bool> ChangeProfilePhoto(string photoUrl, Guid userId)
-        {
-            try
-            {
-                var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                if (user != null)
-                {
-                    user.Photo = photoUrl;
-                    context.Users.Update(user);
-                    context.SaveChanges();
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public async Task<UserDto> GetUser(Guid userId)
-        {
-            var dto = new UserDto();
-            try
-            {
-                var user = context.Users.FirstOrDefault(x => x.Id == userId);
-                if (user != null)
-                {
-                    dto.Name = user.Name;
-                    dto.Surname = user.Surname;
-                    dto.Email = user.Email;
-                    dto.PhoneNumber = user.PhoneNumber;
-                    dto.Photo = user.Photo;
-                    dto.Role = user.Role;   
-                }
-
-                return dto;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public async Task<Guid> UpdateUser(UserDto userDto)
         {
             try
@@ -86,9 +40,10 @@ namespace Application.User.Services
 
                 return userDto.Id;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+
+                throw e;
             }
         }
     }

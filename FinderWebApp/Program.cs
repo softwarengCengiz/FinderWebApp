@@ -1,5 +1,3 @@
-using Application.AI.Interfaces;
-using Application.AI.Services;
 using Application.Community.Interfaces;
 using Application.Community.Services;
 using Application.Events.Interfaces;
@@ -30,7 +28,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<ICommunityService, CommunityService>();
 builder.Services.AddScoped<IPollingService, PollingService>();
-builder.Services.AddHttpClient<IAIService, AIService>();
 builder.Services.AddAuthentication(
     CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x => x.LoginPath = "/Sign/SignIn");
 
@@ -142,10 +139,5 @@ app.MapControllerRoute(
     );
 
 
-app.MapControllerRoute(
-        name: "UserCVProfileRoute",
-        pattern: "UserCVProfile",
-        defaults: new { controller = "Profile", action = "UserCVProfile" }
-    );
 
 app.Run();

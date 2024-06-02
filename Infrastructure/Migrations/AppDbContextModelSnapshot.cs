@@ -186,31 +186,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("Domain.SystemLog.SystemLog", b =>
-                {
-                    b.Property<Guid>("LogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("LogDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LogDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LogFrom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("LogId");
-
-                    b.ToTable("SystemLogs");
-                });
-
             modelBuilder.Entity("Domain.User.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -230,10 +205,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Photo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

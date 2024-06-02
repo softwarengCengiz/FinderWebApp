@@ -5,13 +5,9 @@
     var User = HttpContextAccessor.HttpContext?.Request.Cookies["User"];
     var UserId = HttpContextAccessor.HttpContext?.Request.Cookies["UserId"];
     var Role = HttpContextAccessor.HttpContext?.Request.Cookies["Role"];
-}
+    var Password = HttpContextAccessor.HttpContext?.Request.Cookies["Password"];
 
-<style>
-    * {
-        text-decoration: none !important;
-    }
-</style>
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +16,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>UzmanKöprü</title>
+    <title>Finder.</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -52,7 +48,7 @@
 
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
             <a href="@Url.Action("Index","Home")" class="logo d-flex align-items-center">
-                <h1>UzmanKöprü<span>.</span></h1>
+                <h1>Finder<span>.</span></h1>
             </a>
             @if (HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/Sign") || HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/Participant") || HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/Student")
             || HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/Event") || HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/Communit") || HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/Poll") || HttpContextAccessor.HttpContext.Request.Path.Value.Contains("/ShowEvent"))
@@ -62,19 +58,19 @@
                         <li><a href="@Url.Action("Index","Home")#hero">Anasayfa</a></li>
                         <li><a href="@Url.Action("Index","Home")#about">Hakkımızda</a></li>
                         <li><a href="@Url.RouteUrl("EventsRoute")">Etkinlikler</a></li>
-                        @* <li><a href="@Url.Action("Index","Home")#testimonials">Görüşler</a></li> *@
+                        <li><a href="@Url.Action("Index","Home")#testimonials">Görüşler</a></li>
                         <li><a href="@Url.Action("Index","Home")#contact">İletişim</a></li>
-                        @if (string.IsNullOrEmpty(User))
+                        @if (string.IsNullOrEmpty(User) && string.IsNullOrEmpty(Password))
                         {
                             <li><a href="@Url.RouteUrl("SignUpRoute")">Kayıt Ol</a></li>
                             <li><a href="@Url.RouteUrl("SignInRoute")">Giriş Yap</a></li>
                         }
-                        @if (!string.IsNullOrEmpty(User))
+                        @if (!string.IsNullOrEmpty(User) && !string.IsNullOrEmpty(Password))
                         {
                             <li class="dropdown">
                                 <a href="#"><span>Hoşgeldin @User</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                                 <ul>
-                                    @if (Role == "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9")
+                                    @if (Role == "0")
                                     {
                                         <li><a href="@Url.RouteUrl("StudentProfile",new{id = UserId})">Profilim</a></li>
                                         <li><a href="@Url.Action("Index","Community")">Topluluk İşlemleri</a></li>
@@ -99,19 +95,19 @@
                         <li><a href="#hero">Anasayfa</a></li>
                         <li><a href="#about">Hakkımızda</a></li>
                         <li><a href="@Url.RouteUrl("EventsRoute")">Etkinlikler</a></li>
-                        @* <li><a href="#testimonials">Görüşler</a></li> *@
+                        <li><a href="#testimonials">Görüşler</a></li>
                         <li><a href="#contact">İletişim</a></li>
-                        @if (string.IsNullOrEmpty(User))
+                        @if (string.IsNullOrEmpty(User) && string.IsNullOrEmpty(Password))
                         {
                             <li><a href="@Url.RouteUrl("SignUpRoute")">Kayıt Ol</a></li>
                             <li><a href="@Url.RouteUrl("SignInRoute")">Giriş Yap</a></li>
                         }
-                        @if (!string.IsNullOrEmpty(User))
+                        @if (!string.IsNullOrEmpty(User) && !string.IsNullOrEmpty(Password))
                         {
                             <li class="dropdown">
                                 <a href="#"><span>Hoşgeldin @User</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                                 <ul>
-                                    @if (Role == "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9")
+                                    @if (Role == "0")
                                     {
                                         <li><a href="@Url.RouteUrl("StudentProfile",new{id = UserId})">Profilim</a></li>
                                         <li><a href="@Url.Action("Index","Community")">Topluluk İşlemleri</a></li>
@@ -150,7 +146,7 @@
             <div class="row gy-4">
                 <div class="col-lg-5 col-md-12 footer-info">
                     <a href="index.html" class="logo d-flex align-items-center">
-                        <span>UzmanKöprü</span>
+                        <span>Finder</span>
                     </a>
                     <p>Etkileşimli Kariyer Gelişim Platformu: Web Teknolojileriyle Desteklenen Üniversite-Sektör İşbirliği</p>
                     <div class="social-links d-flex mt-4">
@@ -176,13 +172,19 @@
                     <p>
                         Osmangazi, <br>
                         Hadımköy Yolu Cd,<br>
-                        34522 Beşiktaş/İstanbul <br><br>
+                        34522 Esenyurt/İstanbul <br><br>
                         <strong>Tel:</strong> +90 548 963 85 96<br>
                         <strong>Eposta:</strong> info@finder.com<br>
                     </p>
 
                 </div>
 
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <div class="copyright">
+                Bütün Haklarımız Saklıdır.
             </div>
         </div>
 

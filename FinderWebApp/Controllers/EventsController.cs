@@ -2,9 +2,7 @@ using Application.Community.Interfaces;
 using Application.Events.Contract;
 using Application.Events.Interfaces;
 using Application.Polling.Interfaces;
-using Application.User.Interfaces;
 using Domain.Polling;
-using Domain.User;
 using FinderWebApp.Models;
 using FinderWebApp.Models.Request.Events;
 using FinderWebApp.Models.ViewModels.Community;
@@ -12,7 +10,6 @@ using FinderWebApp.Models.ViewModels.Events;
 using FinderWebApp.Models.ViewModels.Polling;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OpenAI_API.Moderation;
 using System.Diagnostics;
 
 namespace FinderWebApp.Controllers
@@ -24,21 +21,18 @@ namespace FinderWebApp.Controllers
         private readonly IEventService _eventService;
         private readonly IPollingService _pollingService;
         private readonly ICommunityService _communityService;
-        public readonly IUserService _userService;
 
         public EventsController(ILogger<EventsController> logger,
             IWebHostEnvironment hostingEnvironment,
             IEventService eventService,
             IPollingService pollingService,
-            ICommunityService communityService,
-            IUserService userService)
+            ICommunityService communityService)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _eventService = eventService;
             _pollingService = pollingService;
             _communityService = communityService;
-            _userService = userService;
         }
 
         [AllowAnonymous]
@@ -51,8 +45,6 @@ namespace FinderWebApp.Controllers
 
                 foreach (var item in events)
                 {
-                    var userName = _userService.GetUser(item.UserId).Result;
-
                     var myEvent = new MyEventsViewModel
                     {
                         EventId = item.EventId,
@@ -65,14 +57,13 @@ namespace FinderWebApp.Controllers
                         IsActive = item.IsActive,
                         CreatedDate = item.CreatedDate,
                         ModifiedDate = item.ModifiedDate,
-                        UserName = userName.Name + " " + userName.Surname
                     };
                     model.Add(myEvent);
                 }
                 return View(model);
             }
 
-            return View(new List<MyEventsViewModel>());
+            return View(new List<EventsDto>());
         }
 
         [HttpGet]
@@ -113,7 +104,7 @@ namespace FinderWebApp.Controllers
                 EventDetail = request.EventDetail,
                 MinimumQuantity = request.MinimumQuantity,
                 EventImage = uniqueImgFileName,
-                IsActive = true,
+                IsActive = request.IsActive,
                 UserId = Guid.Parse(userId)
             };
 
@@ -250,15 +241,6 @@ namespace FinderWebApp.Controllers
             }
 
             return View(model);
-        }
-
-        [HttpPost]
-        [Authorize]
-        public IActionResult DeleteEventByOwner(Guid eventId)
-        {
-            _eventService.DeleteEventByOwnerAsync(eventId);
-            string? userId = Request.Cookies["UserId"];
-            return Redirect("/MyEvents?id=" + userId);
         }
 
     }

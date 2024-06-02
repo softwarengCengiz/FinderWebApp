@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace FinderWebApp.Models.ViewModels.Events
+﻿namespace FinderWebApp.Models.ViewModels.Events
 {
 	public class MyEventsViewModel
 	{
@@ -14,6 +12,5 @@ namespace FinderWebApp.Models.ViewModels.Events
 		public bool IsActive { get; set; }
 		public DateTime CreatedDate { get; set; }
 		public DateTime ModifiedDate { get; set; }
-		public string? UserName { get; set; }
 	}
 }

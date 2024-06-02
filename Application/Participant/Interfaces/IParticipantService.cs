@@ -7,6 +7,5 @@ namespace Application.Participant.Interfaces
     {
         Task<bool> AddParticipant(ParticipantDto request);
         Task<Guid> UpdateParticipant(ParticipantDto request);
-        Task<ParticipantDto> GetParticipant(Guid userId);
     }
 }

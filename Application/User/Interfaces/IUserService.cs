@@ -9,8 +9,6 @@ namespace Application.User.Interfaces
 {
     public interface IUserService
     {
-        Task<UserDto> GetUser(Guid userId);
         Task<Guid> UpdateUser(UserDto userDto);
-        Task<bool> ChangeProfilePhoto(string photoUrl, Guid userId);
     }
 }
