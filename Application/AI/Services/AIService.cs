@@ -20,6 +20,7 @@ namespace Application.AI.Services
 
         public async Task<string> GetResponseAsync(string input)
         {
+            var openAiApiKey = "";
             _httpClient.DefaultRequestHeaders.Clear();
             _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {openAiApiKey}");
 
