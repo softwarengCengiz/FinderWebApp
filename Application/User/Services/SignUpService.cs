@@ -39,7 +39,8 @@ namespace Application.User.Services
                     Email = user.Email,
                     PhoneNumber = user.PhoneNumber,
                     Password = HashPassword(user.Password),
-                    Role = user.Role
+                    Role = user.Role,
+                    Photo = ""
                 };
 
                 _db.Users.Add(newUser);

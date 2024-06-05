@@ -131,15 +131,15 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label id="name-label" for="name">Oylama Başlatılacak Topluluk</label>
-                    <input type="text" class="form-control" value="@Model.CommunityName" disabled readonly>
+                    <input type="text" id="communityName" class="form-control" value="@Model.CommunityName" disabled readonly>
                     <input type="text" name="CommunityId" id="CommunityId" class="form-control" value="@Model.CommunityId" required readonly hidden>
                     <input type="text" name="EventId" id="EventId" class="form-control" value="@Model.EventId" required readonly hidden>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
+@*         <div class="row">
+            <div class="col-md-12" id="startPollingContainer">
                 <div class="form-group">
                     <label>Aktiflik Durumu</label>
                     <div class="custom-control custom-radio custom-control-inline">
@@ -152,12 +152,27 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> *@
 
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" id="submit" class="btn btn-primary btn-block">Başlat</button>
+                <button type="submit" id="submitbtn" class="btn btn-primary btn-block">Başlat</button>
             </div>
         </div>
     </form>
 </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        var community = $('#communityName').val();
+        if (community == "") {
+            $('#startPollingContainer').attr('hidden','hidden');
+            $('#submitbtn').attr('hidden', 'hidden');
+        }
+
+    })
+
+</script>

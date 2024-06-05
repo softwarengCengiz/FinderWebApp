@@ -53,7 +53,7 @@ namespace FinderWebApp.Controllers
             {
                 EventId = request.EventId,
                 CommunityId = request.CommunityId,
-                IsActive = request.IsActive,
+                IsActive = true,
                 CreatorUserId = Guid.Parse(UserId)
             };
 
