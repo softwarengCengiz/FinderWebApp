@@ -138,22 +138,6 @@
             </div>
         </div>
 
-@*         <div class="row">
-            <div class="col-md-12" id="startPollingContainer">
-                <div class="form-group">
-                    <label>Aktiflik Durumu</label>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline1" value="true" name="IsActive" class="custom-control-input" checked>
-                        <label class="custom-control-label" for="customRadioInline1">Aktif</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline2" value="false" name="IsActive" class="custom-control-input">
-                        <label class="custom-control-label" for="customRadioInline2">Pasif</label>
-                    </div>
-                </div>
-            </div>
-        </div> *@
-
         <div class="row">
             <div class="col-md-12">
                 <button type="submit" id="submitbtn" class="btn btn-primary btn-block">Başlat</button>
@@ -166,7 +150,6 @@
 
 <script>
     $(document).ready(function () {
-        debugger;
         var community = $('#communityName').val();
         if (community == "") {
             $('#startPollingContainer').attr('hidden','hidden');
